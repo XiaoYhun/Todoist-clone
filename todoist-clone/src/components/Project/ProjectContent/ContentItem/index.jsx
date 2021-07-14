@@ -29,7 +29,6 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const handleDeleteClick = () => {
         dispatch(deleteTask(task._id));
     };
-
     return (
         <>
             {isEditing && editingId === task._id ? (

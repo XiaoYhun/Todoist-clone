@@ -25,7 +25,6 @@ export default function App() {
     const handleAddClick = (e) => {
         e.preventDefault();
         setIsOpenAddModal(true);
-        console.log(1);
     };
 
     return (
@@ -37,7 +36,7 @@ export default function App() {
             </MainWrapper>
             <AddTaskModal
                 isOpen={isOpenAddModal}
-                onCloseClick={() => setIsOpenAddModal(false)}
+                onClose={() => setIsOpenAddModal(false)}
             />
             <TaskDetailModal />
         </AppWrapper>

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Button from "shared/components/Button";
+import { useDetectClickOutside, useOnEscapeKeyDown } from "shared/utils/hooks";
 
 import {
     ModalWrapper,
@@ -16,17 +17,22 @@ function Modal({ children, isOpen, onClose = () => {}, isGrow }) {
         setIsOpen(isOpen);
     }, [isOpen]);
 
-    const handleCloseClick = (e) => {
-        e.preventDefault();
+    const $contentRef = useRef();
+
+    const handleCloseClick = () => {
         setIsOpen(false);
         onClose();
     };
+
+    useDetectClickOutside($contentRef, handleCloseClick);
+    useOnEscapeKeyDown(handleCloseClick);
+
     return (
         <Fragment>
             {stateIsOpen && (
                 <ModalWrapper isOpen={stateIsOpen}>
-                    <ModalBackground isOpen={stateIsOpen}>
-                        <ModalContent isGrow={isGrow}>
+                    <ModalBackground>
+                        <ModalContent ref={$contentRef} isGrow={isGrow}>
                             <CloseIcon>
                                 <Button
                                     hasIcon
