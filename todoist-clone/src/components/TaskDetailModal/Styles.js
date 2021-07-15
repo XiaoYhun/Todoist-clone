@@ -124,12 +124,4 @@ export const ActionButton = styled(Button)`
     margin-left: 8px;
     justify-content: center;
     align-items: center;
-
-    ${(props) =>
-        props.fillColor &&
-        css`
-            & svg path {
-                fill: ${props.fillColor};
-            }
-        `}
 `;

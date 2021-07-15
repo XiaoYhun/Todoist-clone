@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Button from "shared/components/Button";
 import styled, { css } from "styled-components";
-import Popper from "shared/components/Popper";
-
+import MoreButton from "./MoreButton";
 const ActionButton = styled(Button)`
     width: 24px;
     height: 24px;
@@ -26,11 +25,6 @@ export const ActionButtonsWrapper = styled.div`
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 function ItemActionButtons({ onDeleteClick, onEditClick }) {
-    const [isOpenPopper, setIsOpenPopper] = useState(false);
-
-    const handlePopperClose = () => {
-        setIsOpenPopper(false);
-    };
     return (
         <ActionButtonsWrapper>
             <ActionButton
@@ -41,20 +35,7 @@ function ItemActionButtons({ onDeleteClick, onEditClick }) {
             />
             <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
             <ActionButton hasIcon iconType="comment" tooltip="Comment" />
-            <Popper
-                isOpen={isOpenPopper}
-                onClose={handlePopperClose}
-                renderContent={() => {
-                    return <div>1231241242</div>;
-                }}
-            >
-                <ActionButton
-                    hasIcon
-                    iconType="more"
-                    tooltip="Delete"
-                    onClick={() => setIsOpenPopper(true)}
-                />
-            </Popper>
+            <MoreButton />
         </ActionButtonsWrapper>
     );
 }

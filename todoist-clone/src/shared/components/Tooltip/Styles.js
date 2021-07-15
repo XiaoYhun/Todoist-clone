@@ -1,12 +1,12 @@
 import styled from "styled-components";
-
+import { zIndexValues } from "shared/utils/styles";
 export const TooltipWrapper = styled.div`
     border-radius: 4px;
     background: #333;
     color: white;
     padding: 3px 4px;
     position: absolute;
-    z-index: 999;
+    z-index: ${zIndexValues.tooltip};
     display: flex;
     top: ${(props) => props.top}px;
     left: ${(props) => props.left}px;

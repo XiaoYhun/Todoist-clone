@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const icons = {
     menu: (
         <svg className="menu_icon" width="24" height="24" viewBox="0 0 24 24">
@@ -42,7 +44,7 @@ const icons = {
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            aria-hidden="true"
+            ariaHidden="true"
             className="search_icon"
         >
             <path
@@ -199,7 +201,7 @@ const icons = {
         >
             <path
                 fill="#246fe0"
-                fill-rule="nonzero"
+                fillRule="nonzero"
                 d="M5 13.777V19.5a.5.5 0 1 1-1 0V5a.5.5 0 0 1 .223-.416C5.313 3.857 6.742 3.5 8.5 3.5c1.113 0 1.92.196 3.658.776C13.796 4.82 14.53 5 15.5 5c1.575 0 2.813-.31 3.723-.916A.5.5 0 0 1 20 4.5V13a.5.5 0 0 1-.223.416c-1.09.727-2.519 1.084-4.277 1.084-1.113 0-1.92-.196-3.658-.776C10.204 13.18 9.47 13 8.5 13c-1.45 0-2.614.262-3.5.777z"
             ></path>
         </svg>
@@ -252,7 +254,7 @@ const icons = {
     ),
     upcoming: (
         <svg width="24" height="24" viewBox="0 0 24 24">
-            <g fill="currentColor" fill-rule="nonzero">
+            <g fill="currentColor" fillRule="nonzero">
                 <path
                     d="M6 4.5h12A1.5 1.5 0 0119.5 6v2.5h-15V6A1.5 1.5 0 016 4.5z"
                     opacity="0.1"
@@ -263,14 +265,14 @@ const icons = {
     ),
     today: (
         <svg width="24" height="24" viewBox="0 0 24 24">
-            <g fill="currentColor" fill-rule="evenodd">
+            <g fill="currentColor" fillRule="evenodd">
                 <path
-                    fill-rule="nonzero"
+                    fillRule="nonzero"
                     d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v2.5h-15V6A1.5 1.5 0 0 1 6 4.5z"
                     opacity=".1"
                 ></path>
                 <path
-                    fill-rule="nonzero"
+                    fillRule="nonzero"
                     d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z"
                 ></path>
                 <text
@@ -288,7 +290,7 @@ const icons = {
     ),
     big_inbox: (
         <svg width="24" height="24" viewBox="0 0 24 24">
-            <g fill="currentColor" fill-rule="nonzero">
+            <g fill="currentColor" fillRule="nonzero">
                 <path
                     d="M10 14.5a2 2 0 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
                     opacity="0.1"
@@ -307,9 +309,167 @@ const icons = {
         >
             <path
                 fill="currentColor"
-                fill-rule="nonzero"
+                fillRule="nonzero"
                 d="M10.5 17h9a.5.5 0 1 1 0 1h-9a.5.5 0 1 1 0-1zm0-6h9a.5.5 0 1 1 0 1h-9a.5.5 0 1 1 0-1zm0-6h9a.5.5 0 1 1 0 1h-9a.5.5 0 1 1 0-1zM5.75 18.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm0-6a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm0-6a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"
             ></path>
+        </svg>
+    ),
+    calendarToday: (
+        <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            class="scheduler-suggestions-item-icon--today"
+            ariaHidden="true"
+            focusable="false"
+        >
+            <g fill="currentColor" fillRule="nonzero">
+                <path
+                    d="M6 3.5h16A2.5 2.5 0 0 1 24.5 6v2.5h-21V6A2.5 2.5 0 0 1 6 3.5z"
+                    opacity=".1"
+                ></path>
+                <path d="M22 3a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h16zm0 1H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-.5 4a.5.5 0 1 1 0 1h-15a.5.5 0 0 1 0-1z"></path>
+                <text
+                    font-family="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+                    font-size="11"
+                    transform="translate(4 2)"
+                    font-weight="500"
+                >
+                    <tspan x="9.5" y="18" text-anchor="middle">
+                        {moment().format("DD")}
+                    </tspan>
+                </text>
+            </g>
+        </svg>
+    ),
+    sun: (
+        <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            class="scheduler-suggestions-item-icon--tomorrow"
+            ariaHidden="true"
+            focusable="false"
+        >
+            <g fill="currentColor" fillRule="nonzero">
+                <path
+                    d="M14 19a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+                    opacity=".1"
+                ></path>
+                <path d="M10.939 21.391a.5.5 0 0 1 .27.653L9.68 25.74a.5.5 0 1 1-.924-.383l1.53-3.695a.5.5 0 0 1 .654-.271zm6.776.27l1.53 3.696a.5.5 0 0 1-.923.383l-1.531-3.696a.5.5 0 0 1 .924-.382zM14 8a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm-7.391 9.061a.5.5 0 0 1-.27.654l-3.696 1.53a.5.5 0 0 1-.383-.923l3.696-1.531a.5.5 0 0 1 .653.27zm15.435-.27l3.696 1.53a.5.5 0 0 1-.383.924l-3.695-1.53a.5.5 0 1 1 .382-.924zM14 9a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM2.643 8.755l3.695 1.53a.5.5 0 1 1-.382.924L2.26 9.68a.5.5 0 1 1 .383-.924zm23.367.27a.5.5 0 0 1-.27.653l-3.696 1.531a.5.5 0 0 1-.382-.924l3.695-1.53a.5.5 0 0 1 .653.27zM9.678 2.26l1.531 3.696a.5.5 0 0 1-.924.382l-1.53-3.695a.5.5 0 1 1 .923-.383zm9.297-.27a.5.5 0 0 1 .27.653l-1.53 3.695a.5.5 0 1 1-.924-.382l1.53-3.696a.5.5 0 0 1 .654-.27z"></path>
+            </g>
+        </svg>
+    ),
+    chair: (
+        <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            class="scheduler-suggestions-item-icon--weekend"
+            ariaHidden="true"
+            focusable="false"
+        >
+            <path
+                fill="currentColor"
+                d="M19.3 6c2 0 3.7 1.6 3.7 3.7V11a2.5 2.5 0 013 2.4v5c0 1.4-1 2.5-2.4 2.5H21v.5a.5.5 0 01-1 0V21H8v.5a.5.5 0 01-1 0V21H4.5A2.5 2.5 0 012 18.5v-5a2.5 2.5 0 013-2.4V9.7C5 7.7 6.6 6 8.7 6h10.6zm4.2 6c-.8 0-1.4.6-1.5 1.4V17H6v-3.5a1.5 1.5 0 00-3-.1v5.1c0 .8.6 1.4 1.4 1.5h19.1c.8 0 1.4-.6 1.5-1.3v-5.2c0-.8-.7-1.5-1.5-1.5zm-4.2-5H8.7A2.7 2.7 0 006 9.5v2c.6.5 1 1.2 1 2V16h14v-2.5c0-.8.4-1.5 1-2V9.7C22 8.3 20.9 7 19.5 7h-.2z"
+            ></path>
+        </svg>
+    ),
+    nextWeek: (
+        <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            class="scheduler-suggestions-item-icon--next-week"
+            ariaHidden="true"
+            focusable="false"
+        >
+            <g fill="currentColor" fillRule="nonzero">
+                <path
+                    d="M6 3.5h16A2.5 2.5 0 0 1 24.5 6v2.5h-21V6A2.5 2.5 0 0 1 6 3.5z"
+                    opacity=".1"
+                ></path>
+                <path d="M22 3a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h16zm0 1H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-3.109 12.188l.007.01-.004-.005-.003-.005zM21.5 8a.5.5 0 1 1 0 1h-15a.5.5 0 0 1 0-1zM19 16.52a.504.504 0 0 1-.023.131l-.015.04a.494.494 0 0 1-.05.093l-.014.018a.503.503 0 0 1-.033.04l-3.511 3.512a.5.5 0 0 1-.765-.638l.057-.07L17.292 17H9.5a.5.5 0 0 1-.492-.41L9 16.5a.5.5 0 0 1 .41-.492L9.5 16h7.792l-2.646-2.646a.5.5 0 0 1 .638-.765l.07.057 3.511 3.513.017.019.009.01-.027-.03.03.035.029.04a.52.52 0 0 1 .066.162l.008.052v.007l-.002-.026.005.072v.02z"></path>
+            </g>
+        </svg>
+    ),
+    noDate: (
+        <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            ariaHidden="true"
+            focusable="false"
+        >
+            <path
+                fill="currentColor"
+                fillRule="nonzero"
+                d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm0 1a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm3.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"
+            ></path>
+        </svg>
+    ),
+    moveTo: (
+        <svg width="24" height="24">
+            <g fill="none" transform="translate(4 4)">
+                <circle cx="8" cy="8" r="7.5" stroke="currentColor"></circle>
+                <path
+                    fill="currentColor"
+                    d="M10.11 7.82L8.15 5.85a.5.5 0 1 1 .7-.7l2.83 2.82a.5.5 0 0 1 0 .71l-2.83 2.83a.5.5 0 1 1-.7-.7l1.98-1.99H4.5a.5.5 0 1 1 0-1h5.61z"
+                ></path>
+            </g>
+        </svg>
+    ),
+    duplicate: (
+        <svg width="24" height="24">
+            <g fill="none">
+                <path
+                    fill="currentColor"
+                    d="M11 13h2.5c.3 0 .5.2.5.5s-.2.5-.5.5H11v2.5a.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5V14H7.5a.5.5 0 0 1-.5-.5c0-.3.2-.5.5-.5H10v-2.5c0-.3.2-.5.5-.5s.5.2.5.5V13z"
+                ></path>
+                <rect
+                    width="12"
+                    height="12"
+                    x="4.5"
+                    y="7.5"
+                    stroke="currentColor"
+                    rx="2"
+                ></rect>
+                <path
+                    fill="currentColor"
+                    d="M19 16.7V6a1 1 0 0 0-1-1H7.3c.2-.3.4-.6.7-.7.3-.2.7-.3 1.6-.3h7.8c1 0 1.3 0 1.6.3.3.1.6.4.7.7.2.3.3.7.3 1.6v7.8c0 1 0 1.3-.3 1.6-.1.3-.4.5-.7.7zm-1.6.3H9.6h7.8z"
+                ></path>
+            </g>
+        </svg>
+    ),
+    link: (
+        <svg width="24" height="24">
+            <path
+                fill="currentColor"
+                d="M7.39 12.339l.706.707-1.768 1.768a2 2 0 1 0 2.829 2.828l3.535-3.535a2 2 0 0 0 0-2.829l.707-.707a3 3 0 0 1 0 4.243l-3.535 3.535a3 3 0 0 1-4.243-4.242l1.768-1.768zm8.838-.354l-.707-.707 1.768-1.768a2 2 0 1 0-2.829-2.828l-3.535 3.536a2 2 0 0 0 0 2.828l-.707.707a3 3 0 0 1 0-4.243l3.535-3.535a3 3 0 0 1 4.243 4.243l-1.768 1.767z"
+            ></path>
+        </svg>
+    ),
+    trash: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+            <g fill="none" fill-rule="evenodd">
+                <path d="M0 0h24v24H0z"></path>
+                <rect
+                    width="14"
+                    height="1"
+                    x="5"
+                    y="6"
+                    fill="currentColor"
+                    rx=".5"
+                ></rect>
+                <path
+                    fill="currentColor"
+                    d="M10 9h1v8h-1V9zm3 0h1v8h-1V9z"
+                ></path>
+                <path
+                    stroke="currentColor"
+                    d="M17.5 6.5h-11V18A1.5 1.5 0 0 0 8 19.5h8a1.5 1.5 0 0 0 1.5-1.5V6.5zm-9 0h7V5A1.5 1.5 0 0 0 14 3.5h-4A1.5 1.5 0 0 0 8.5 5v1.5z"
+                ></path>
+            </g>
         </svg>
     ),
 };

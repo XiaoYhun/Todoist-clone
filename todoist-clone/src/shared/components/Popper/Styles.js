@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-
+import { zIndexValues } from "shared/utils/styles";
 export const PopperWrapper = styled.div`
     position: fixed;
     top: 0;
@@ -8,7 +8,7 @@ export const PopperWrapper = styled.div`
     left: 0;
     overflow: hidden;
     //opacity: ${(props) => (props.isOpen ? 1 : 0)};
-    z-index: 11500;
+    z-index: ${zIndexValues.popper};
     display: flex;
     flex-direction: column;
     align-items: center;

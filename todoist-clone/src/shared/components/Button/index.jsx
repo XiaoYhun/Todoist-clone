@@ -1,7 +1,7 @@
 import React, { forwardRef, Fragment, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import icons from "shared/utils/icons";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Tooltip from "shared/components/Tooltip";
 export const ButtonWrapper = styled.button`
     border: none;
@@ -24,6 +24,13 @@ export const ButtonWrapper = styled.button`
         margin-right: 6px;
         word-break: normal;
     }
+    ${(props) =>
+        props.fillColor &&
+        css`
+            & svg path {
+                fill: ${props.fillColor};
+            }
+        `}
 `;
 const Button = ({
     hasIcon,
@@ -31,6 +38,7 @@ const Button = ({
     children,
     className,
     tooltip,
+    fillColor,
     ...buttonProps
 }) => {
     const [openTooltip, setOpenTooltip] = useState(false);
@@ -40,6 +48,7 @@ const Button = ({
             className={className}
             type="button"
             ref={buttonRef}
+            fillColor={fillColor}
             {...buttonProps}
             onMouseEnter={() => setOpenTooltip(true)}
             onMouseLeave={() => setOpenTooltip(false)}
