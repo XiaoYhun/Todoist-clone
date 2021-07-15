@@ -38,6 +38,7 @@ const IconMenuItem = styled.li`
     &:hover {
         background-color: #f3f3f3;
     }
+
     & .icon_menu {
         color: grey;
         height: 24px;
@@ -55,6 +56,7 @@ const IconMenuItem = styled.li`
 const MenuSeparator = styled.li`
     margin: 4px;
     border-bottom: 1px solid #ddd;
+    padding: 0px !important;
 `;
 const SectionMenuItem = styled.li`
     padding: 4px 10px;
@@ -79,10 +81,15 @@ const SectionMenuItem = styled.li`
 
     & .priority_holder button {
         margin-right: 18px !important;
+        border: 1px solid transparent;
+    }
+    & .priority_holder button.selected {
+        border-color: #ddd !important;
     }
 `;
 
-function MoreButton(props) {
+const priorities = [1, 2, 3, 4];
+function MoreButton({ onDeleteClick, task }) {
     const [isOpenPopper, setIsOpenPopper] = useState(false);
 
     const handlePopperClose = () => {
@@ -147,29 +154,19 @@ function MoreButton(props) {
                         <SectionMenuItem>
                             <div className="section_menu_label">Priority</div>
                             <div className="priority_holder section_menu_content">
-                                <Button
-                                    hasIcon
-                                    iconType={"flagFill"}
-                                    fillColor={priorityColor[1]}
-                                    tooltip={"Priority 1"}
-                                ></Button>
-                                <Button
-                                    hasIcon
-                                    iconType={"flagFill"}
-                                    fillColor={priorityColor[2]}
-                                    tooltip={"Priority 2"}
-                                ></Button>
-                                <Button
-                                    hasIcon
-                                    iconType={"flagFill"}
-                                    fillColor={priorityColor[3]}
-                                    tooltip={"Priority 3"}
-                                ></Button>
-                                <Button
-                                    hasIcon
-                                    iconType={"flag"}
-                                    tooltip={"Priority 4"}
-                                ></Button>
+                                {priorities.map((item) => (
+                                    <Button
+                                        hasIcon
+                                        iconType={
+                                            item < 4 ? "flagFill" : "flag"
+                                        }
+                                        fillColor={priorityColor[item]}
+                                        tooltip={`Priority ${item}`}
+                                        className={
+                                            item === task.priority && "selected"
+                                        }
+                                    />
+                                ))}
                             </div>
                         </SectionMenuItem>
                         <MenuSeparator />
@@ -193,7 +190,10 @@ function MoreButton(props) {
                             </div>
                         </IconMenuItem>
                         <MenuSeparator />
-                        <IconMenuItem className="menu_item_delete">
+                        <IconMenuItem
+                            className="menu_item_delete"
+                            onClick={onDeleteClick}
+                        >
                             <div className="icon_menu">{icons.trash}</div>
                             <div className="content_menu">Delete task</div>
                         </IconMenuItem>

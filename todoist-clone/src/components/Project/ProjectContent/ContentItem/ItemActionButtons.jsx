@@ -24,7 +24,7 @@ export const ActionButtonsWrapper = styled.div`
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
-function ItemActionButtons({ onDeleteClick, onEditClick }) {
+function ItemActionButtons({ onDeleteClick, onEditClick, task }) {
     return (
         <ActionButtonsWrapper>
             <ActionButton
@@ -35,7 +35,7 @@ function ItemActionButtons({ onDeleteClick, onEditClick }) {
             />
             <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
             <ActionButton hasIcon iconType="comment" tooltip="Comment" />
-            <MoreButton />
+            <MoreButton onDeleteClick={onDeleteClick} task={task} />
         </ActionButtonsWrapper>
     );
 }

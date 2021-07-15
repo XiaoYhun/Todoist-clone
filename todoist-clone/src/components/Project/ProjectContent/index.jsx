@@ -59,11 +59,11 @@ function ProjectContent({ tasksList }) {
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                             >
-                                {tasksList.map((item) => (
+                                {tasksList.map((task) => (
                                     <ContentItem
-                                        key={item._id}
-                                        task={item}
-                                        index={item.order}
+                                        key={task._id}
+                                        task={task}
+                                        index={task.order}
                                         editingId={editingId}
                                         editRequest={handleEditRequest}
                                     ></ContentItem>

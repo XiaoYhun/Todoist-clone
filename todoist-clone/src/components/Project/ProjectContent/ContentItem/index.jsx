@@ -84,6 +84,7 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                             setIsEditing(true);
                                             editRequest(task._id);
                                         }}
+                                        task={task}
                                     ></ItemActionButtons>
                                 </ContentItemWrapper>
                             </DragContainer>
