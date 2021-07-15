@@ -282,7 +282,7 @@ const icons = {
                     font-weight="500"
                 >
                     <tspan x="8" y="15" text-anchor="middle">
-                        11
+                        {moment().format("DD")}
                     </tspan>
                 </text>
             </g>
