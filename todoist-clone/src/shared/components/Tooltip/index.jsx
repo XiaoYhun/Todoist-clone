@@ -42,7 +42,6 @@ function Tooltip({ isOpen = false, parentRef, children }) {
 const calculatePos = (parentRef, tooltipRef) => {
     var parentRect = parentRef.current.getBoundingClientRect();
     var tooltipRect = tooltipRef.current.getBoundingClientRect();
-    console.log(parentRect);
     return {
         top: parentRect.height + 10 + parentRect.top,
         left:

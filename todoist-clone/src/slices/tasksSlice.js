@@ -34,8 +34,6 @@ export const saveTasksOrder = createAsyncThunk(
 
             return response.data;
         } catch (error) {
-            console.log(error);
-
             return rejectWithValue(error.message);
         }
     }

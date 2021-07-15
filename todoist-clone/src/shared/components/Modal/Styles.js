@@ -21,7 +21,7 @@ export const ModalWrapper = styled.div`
     justify-content: center;
 `;
 
-export const ModalBackground = styled.div`
+export const ModalOverlay = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
