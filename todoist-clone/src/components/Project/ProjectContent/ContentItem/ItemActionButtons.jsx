@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Button from "shared/components/Button";
 import styled, { css } from "styled-components";
 import MoreButton from "./MoreButton";
+import SchedulePopper from "components/SchedulePopper";
+
 const ActionButton = styled(Button)`
     width: 24px;
     height: 24px;
@@ -33,7 +35,9 @@ function ItemActionButtons({ onDeleteClick, onEditClick, task }) {
                 tooltip="Edit"
                 onClick={onEditClick}
             />
-            <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
+            <SchedulePopper>
+                <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
+            </SchedulePopper>
             <ActionButton hasIcon iconType="comment" tooltip="Comment" />
             <MoreButton onDeleteClick={onDeleteClick} task={task} />
         </ActionButtonsWrapper>
