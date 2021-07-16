@@ -21,7 +21,6 @@ export const PopperOverlay = styled.div`
     align-items: center;
     justify-content: center;
     min-width: 100%;
-
     flex-grow: 1;
 `;
 export const PopperContent = styled.div`
@@ -35,9 +34,13 @@ export const PopperContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
+    align-content: stretch;
     ${({ position }) => css`
         top: ${position.y + "px"};
         left: ${position.x + "px"};
     `}
+
+    &>* {
+        flex: 1;
+    }
 `;

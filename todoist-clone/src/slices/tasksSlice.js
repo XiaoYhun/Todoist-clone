@@ -96,9 +96,6 @@ const taskSlice = createSlice({
         [updateTask.pending]: (state, { meta: { arg } }) => {
             tasksAdapter.upsertOne(state, arg);
         },
-        [updateTask.fulfilled]: (state, { payload }) => {
-            //tasksAdapter.upsertOne(state, payload);
-        },
     },
 });
 export const { updateTasksOrder } = taskSlice.actions;

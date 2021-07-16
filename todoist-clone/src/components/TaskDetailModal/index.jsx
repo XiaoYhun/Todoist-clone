@@ -15,7 +15,7 @@ import {
     DateDueButton,
     ActionButton,
 } from "./Styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import TaskTabs from "./TaskTabs";
 import Modal from "shared/components/Modal";
 import icons from "shared/utils/icons";
@@ -23,13 +23,23 @@ import { tasksSelectors } from "slices/tasksSlice";
 import moment from "moment";
 import AddTaskInline from "../Project/AddTaskInline";
 import { priorityColor } from "shared/utils/styles";
+import PrioritySelectDropdown from "../PrioritySelectDropdown";
+import { updateTask } from "slices/tasksSlice";
 function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
     const [isEditing, setIsEditing] = useState(false);
-
+    const dispatch = useDispatch();
     const task = useSelector((state) =>
         tasksSelectors.selectById(state, taskId)
     );
-    return (
+
+    const handleUpdateTask = (newTask) => {
+        dispatch(updateTask(newTask));
+    };
+
+    const handlePriorityChange = (value) => {
+        handleUpdateTask({ ...task, priority: value });
+    };
+    return task ? (
         <Modal isOpen={isOpen} onClose={onClose} isGrow>
             <TaskDetailModalWrapper>
                 <DetailHeader>
@@ -82,18 +92,24 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                                     iconType="tag"
                                     tooltip="Add label(s)"
                                 ></ActionButton>
-                                <ActionButton
-                                    hasIcon
-                                    tooltip="Set priority"
-                                    iconType={
-                                        task && task.priority
-                                            ? "flagFill"
-                                            : "flag"
-                                    }
-                                    fillColor={
-                                        task && priorityColor[task.priority]
-                                    }
-                                ></ActionButton>
+                                <PrioritySelectDropdown
+                                    value={task.priority}
+                                    onChange={handlePriorityChange}
+                                >
+                                    <ActionButton
+                                        hasIcon
+                                        tooltip="Set priority"
+                                        iconType={
+                                            task && task.priority < 4
+                                                ? "flagFill"
+                                                : "flag"
+                                        }
+                                        fillColor={
+                                            task && priorityColor[task.priority]
+                                        }
+                                    />
+                                </PrioritySelectDropdown>
+
                                 <ActionButton
                                     hasIcon
                                     iconType="clock"
@@ -111,6 +127,8 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                 <TaskTabs>123</TaskTabs>
             </TaskDetailModalWrapper>
         </Modal>
+    ) : (
+        <></>
     );
 }
 

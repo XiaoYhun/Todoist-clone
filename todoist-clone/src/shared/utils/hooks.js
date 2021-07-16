@@ -1,10 +1,15 @@
 import { useEffect } from "react";
 
-export const useDetectClickOutside = ($containerRef, onClickOutside) => {
+export const useDetectClickOutside = (
+    $containerRef,
+    $ignoredRef,
+    onClickOutside
+) => {
     const handleClickOutside = (e) => {
         if (
             $containerRef.current &&
-            !$containerRef.current.contains(e.target)
+            !$containerRef.current.contains(e.target) &&
+            $ignoredRef.current.contains(e.target)
         ) {
             onClickOutside();
         }

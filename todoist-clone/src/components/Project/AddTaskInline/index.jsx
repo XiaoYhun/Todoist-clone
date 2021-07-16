@@ -16,6 +16,7 @@ import {
 import { useDispatch } from "react-redux";
 import { addTask, updateTask } from "slices/tasksSlice";
 import { priorityColor } from "shared/utils/styles";
+import PrioritySelectDropdown from "./../../PrioritySelectDropdown/index";
 function AddTaskInline({
     onSubmit = () => {},
     onSave = () => {},
@@ -24,8 +25,8 @@ function AddTaskInline({
     task = {},
 }) {
     const [text, setText] = useState(isEdit ? task.text : "");
+    const [priority, setPriority] = useState(isEdit ? task.priority : 0);
     const dispatch = useDispatch();
-    const testref = useRef();
     useEffect(() => {
         if (isEdit && task.text) {
             setText(task.text);
@@ -41,7 +42,7 @@ function AddTaskInline({
 
     const handleSaveTask = (e) => {
         e.preventDefault();
-        const newTask = { ...task, text: text };
+        const newTask = { ...task, text: text, priority: priority };
         try {
             dispatch(updateTask(newTask));
         } catch (error) {
@@ -55,9 +56,12 @@ function AddTaskInline({
         setText(e.target.innerText);
     };
 
+    const handlePriorityChange = (value) => {
+        setPriority(value);
+    };
     return (
         <AddTaskForm>
-            <AddTaskEditArea ref={testref}>
+            <AddTaskEditArea>
                 <AddTaskInput
                     contentEditable="true"
                     role="textbox"
@@ -76,11 +80,20 @@ function AddTaskInline({
                     </ProjectButtons>
                     <ActionButtons>
                         <ActionButton hasIcon iconType="tag"></ActionButton>
-                        <ActionButton
-                            hasIcon
-                            iconType={task.priority ? "flagFill" : "flag"}
-                            fillColor={priorityColor[task.priority]}
-                        ></ActionButton>
+                        <PrioritySelectDropdown
+                            value={priority}
+                            onChange={handlePriorityChange}
+                        >
+                            <ActionButton
+                                hasIcon
+                                iconType={
+                                    priority && priority < 4
+                                        ? "flagFill"
+                                        : "flag"
+                                }
+                                fillColor={priorityColor[priority]}
+                            />
+                        </PrioritySelectDropdown>
                         <ActionButton hasIcon iconType="clock"></ActionButton>
                         <ActionButton hasIcon iconType="comment"></ActionButton>
                     </ActionButtons>

@@ -62,13 +62,12 @@ function Popper({
             window.addEventListener("scroll", calculatePos);
         }
         return () => {
-            console.log("cleared");
             window.removeEventListener("resize", calculatePos);
             window.removeEventListener("scroll", calculatePos);
         };
     }, [$windowRef, $linkRef, stateIsOpen]);
 
-    useDetectClickOutside($contentRef, handleCloseClick);
+    useDetectClickOutside($contentRef, $windowRef, handleCloseClick);
     useOnEscapeKeyDown(handleCloseClick);
     return (
         <div ref={$linkRef}>

@@ -28,13 +28,14 @@ function Modal({ children, isOpen, onClose = () => {}, isGrow }) {
     }, [isOpen]);
 
     const $contentRef = useRef();
+    const $overlayRef = useRef();
 
     const handleCloseClick = () => {
         setIsOpen(false);
         onClose();
     };
 
-    useDetectClickOutside($contentRef, handleCloseClick);
+    useDetectClickOutside($contentRef, $overlayRef, handleCloseClick);
     useOnEscapeKeyDown(handleCloseClick);
 
     return (
@@ -42,7 +43,7 @@ function Modal({ children, isOpen, onClose = () => {}, isGrow }) {
             {stateIsOpen &&
                 ReactDOM.createPortal(
                     <ModalWrapper isOpen={stateIsOpen}>
-                        <ModalOverlay>
+                        <ModalOverlay ref={$overlayRef}>
                             <ModalContent ref={$contentRef} isGrow={isGrow}>
                                 <CloseIcon>
                                     <Button
