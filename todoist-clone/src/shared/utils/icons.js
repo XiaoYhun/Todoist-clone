@@ -223,7 +223,6 @@ const icons = {
     ),
     calendar: (
         <svg
-            data-svgs-path="sm1/calendar_small.svg"
             xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
@@ -233,6 +232,15 @@ const icons = {
                 fill="currentColor"
                 fillRule="nonzero"
                 d="M12 2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8zm0 1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1.25 7a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5zm.75-5a.5.5 0 1 1 0 1h-7a.5.5 0 0 1 0-1h7z"
+            ></path>
+        </svg>
+    ),
+    calendarSmall: (
+        <svg width="12" height="12" viewBox="0 0 12 12">
+            <path
+                fill="currentColor"
+                fillRule="nonzero"
+                d="M9.5 1A1.5 1.5 0 0 1 11 2.5v7A1.5 1.5 0 0 1 9.5 11h-7A1.5 1.5 0 0 1 1 9.5v-7A1.5 1.5 0 0 1 2.5 1h7zm0 1h-7a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5zM8 7.25a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5zM8.5 4a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"
             ></path>
         </svg>
     ),
@@ -319,7 +327,7 @@ const icons = {
             width="28"
             height="28"
             viewBox="0 0 28 28"
-            class="scheduler-suggestions-item-icon--today"
+            className="scheduler-suggestions-item-icon--today"
             ariaHidden="true"
             focusable="false"
         >
@@ -347,7 +355,7 @@ const icons = {
             width="28"
             height="28"
             viewBox="0 0 28 28"
-            class="scheduler-suggestions-item-icon--tomorrow"
+            className="scheduler-suggestions-item-icon--tomorrow"
             ariaHidden="true"
             focusable="false"
         >
@@ -365,7 +373,7 @@ const icons = {
             width="28"
             height="28"
             viewBox="0 0 28 28"
-            class="scheduler-suggestions-item-icon--weekend"
+            className="scheduler-suggestions-item-icon--weekend"
             ariaHidden="true"
             focusable="false"
         >
@@ -380,7 +388,7 @@ const icons = {
             width="28"
             height="28"
             viewBox="0 0 28 28"
-            class="scheduler-suggestions-item-icon--next-week"
+            className="scheduler-suggestions-item-icon--next-week"
             ariaHidden="true"
             focusable="false"
         >
@@ -479,7 +487,7 @@ const icons = {
             width="12"
             height="12"
             ariaHidden="true"
-            class="dropdown_select_checkmark"
+            className="dropdown_select_checkmark"
         >
             <path
                 fill="currentColor"

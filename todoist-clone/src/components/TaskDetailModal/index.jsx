@@ -25,6 +25,7 @@ import AddTaskInline from "../Project/AddTaskInline";
 import { priorityColor } from "shared/utils/styles";
 import PrioritySelectDropdown from "../PrioritySelectDropdown";
 import { updateTask } from "slices/tasksSlice";
+import SchedulePopper from "./../SchedulePopper/index";
 function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
     const [isEditing, setIsEditing] = useState(false);
     const dispatch = useDispatch();
@@ -39,6 +40,11 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
     const handlePriorityChange = (value) => {
         handleUpdateTask({ ...task, priority: value });
     };
+
+    const handleUpdateDate = (date) => {
+        handleUpdateTask({ ...task, date: date });
+    };
+
     return task ? (
         <Modal isOpen={isOpen} onClose={onClose} isGrow>
             <TaskDetailModalWrapper>
@@ -74,12 +80,15 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                             </TaskOverviewHeader>
 
                             <TaskOverviewSub>
-                                <DateDueButton hasIcon iconType="calendar">
-                                    {task &&
-                                        moment(task.date).format(
-                                            "DD MMM kk:mm"
-                                        )}
-                                </DateDueButton>
+                                <SchedulePopper
+                                    selectedDay={task.date}
+                                    onDayClick={handleUpdateDate}
+                                >
+                                    <DateDueButton hasIcon iconType="calendar">
+                                        {task &&
+                                            moment(+task.date).format("DD MMM")}
+                                    </DateDueButton>
+                                </SchedulePopper>
                             </TaskOverviewSub>
                             <TaskOverviewFooter>
                                 <ActionButton
@@ -100,7 +109,9 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                                         hasIcon
                                         tooltip="Set priority"
                                         iconType={
-                                            task && task.priority < 4
+                                            task &&
+                                            task.priority >= 1 &&
+                                            task.priority < 4
                                                 ? "flagFill"
                                                 : "flag"
                                         }

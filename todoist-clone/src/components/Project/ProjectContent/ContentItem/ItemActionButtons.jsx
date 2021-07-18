@@ -4,7 +4,7 @@ import Button from "shared/components/Button";
 import styled, { css } from "styled-components";
 import MoreButton from "./MoreButton";
 import SchedulePopper from "components/SchedulePopper";
-
+import moment from "moment";
 const ActionButton = styled(Button)`
     width: 24px;
     height: 24px;
@@ -26,7 +26,11 @@ export const ActionButtonsWrapper = styled.div`
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
-function ItemActionButtons({ onDeleteClick, onEditClick, task }) {
+function ItemActionButtons({ onDeleteClick, onEditClick, task, onUpdate }) {
+    const handleDayClick = (timestamp) => {
+        onUpdate({ ...task, date: timestamp });
+    };
+
     return (
         <ActionButtonsWrapper>
             <ActionButton
@@ -35,7 +39,7 @@ function ItemActionButtons({ onDeleteClick, onEditClick, task }) {
                 tooltip="Edit"
                 onClick={onEditClick}
             />
-            <SchedulePopper>
+            <SchedulePopper onDayClick={handleDayClick} selectedDay={task.date}>
                 <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
             </SchedulePopper>
             <ActionButton hasIcon iconType="comment" tooltip="Comment" />

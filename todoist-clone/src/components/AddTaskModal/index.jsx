@@ -15,8 +15,16 @@ import {
 } from "./Styles";
 import Modal from "shared/components/Modal";
 import Button from "shared/components/Button";
+import SchedulePopper from "components/SchedulePopper";
+import moment from "moment";
 function AddTaskModal(props) {
     const [value, setValue] = useState("");
+    const [date, setDate] = useState(moment());
+
+    const handleDayClick = (date) => {
+        setDate(date);
+    };
+
     return (
         <Modal {...props}>
             <AddTaskWrapper>
@@ -29,13 +37,18 @@ function AddTaskModal(props) {
                     </AddTaskInput>
                     <TaskExtraButtons>
                         <ProjectButtons>
-                            <ProjectButton
-                                hasIcon
-                                iconType="calendar"
-                                id="today"
+                            <SchedulePopper
+                                selectedDate={date}
+                                onDayClick={handleDayClick}
                             >
-                                Today
-                            </ProjectButton>
+                                <ProjectButton
+                                    hasIcon
+                                    iconType="calendar"
+                                    id="today"
+                                >
+                                    {moment(date).format("DD MMM")}
+                                </ProjectButton>
+                            </SchedulePopper>
                             <ProjectButton hasIcon iconType="inbox">
                                 Inbox
                             </ProjectButton>

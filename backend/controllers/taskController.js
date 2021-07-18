@@ -17,11 +17,9 @@ export const createTask = async (req, res) => {
         const newTask = new Task(task);
 
         await newTask.save();
-        console.log(newTask);
         res.status(201).json(newTask);
     } catch (error) {
         res.status(409).json({ message: error.message });
-        console.log(error.message);
     }
 };
 
@@ -49,7 +47,6 @@ export const deleteTask = async (req, res) => {
 export const updateTask = async (req, res) => {
     try {
         let task = req.body;
-        console.log(task);
         task = await Task.updateOne({ _id: task._id }, { ...task });
 
         res.status(200).json(task);

@@ -39,12 +39,12 @@ export const ContentItemWrapper = styled.li`
     }
 `;
 
-export const ContentLink = styled(Link)`
+export const ContentLink = styled.div`
     flex: 1;
     padding: 8px 0;
     margin-right: 30px;
 `;
-export const ContentText = styled.div`
+export const ContentText = styled(Link)`
     display: flex;
     margin-bottom: 3px;
     width: 100%;
@@ -68,6 +68,10 @@ export const ContentTags = styled.div`
     padding: 0;
     min-height: 16px;
     justify-content: space-between;
+
+    & .overdue {
+        color: #d1453b;
+    }
 `;
 
 export const ProjectLink = styled.span`

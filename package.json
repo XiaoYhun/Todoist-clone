@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"cd backend && npm start && cd ../todoist-clone && npm start"
+    "start":"cd ./backend/ && npm start && cd ./../todoist-clone/ && npm start",
+    "server": "cd ./backend/ && npm start",
+    "client": "cd ./todoist-clone/ && npm start"
   },
   "author": "",
   "license": "ISC"

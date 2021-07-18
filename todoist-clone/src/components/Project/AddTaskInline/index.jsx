@@ -17,6 +17,8 @@ import { useDispatch } from "react-redux";
 import { addTask, updateTask } from "slices/tasksSlice";
 import { priorityColor } from "shared/utils/styles";
 import PrioritySelectDropdown from "./../../PrioritySelectDropdown/index";
+import SchedulePopper from "components/SchedulePopper";
+import moment from "moment";
 function AddTaskInline({
     onSubmit = () => {},
     onSave = () => {},
@@ -26,7 +28,9 @@ function AddTaskInline({
 }) {
     const [text, setText] = useState(isEdit ? task.text : "");
     const [priority, setPriority] = useState(isEdit ? task.priority : 0);
+    const [date, setDate] = useState(isEdit ? task.date : Date.now());
     const dispatch = useDispatch();
+
     useEffect(() => {
         if (isEdit && task.text) {
             setText(task.text);
@@ -35,14 +39,14 @@ function AddTaskInline({
 
     const handleSubmitNewTask = (e) => {
         e.preventDefault();
-        dispatch(addTask({ text: text, priority: 0, date: new Date() }));
+        dispatch(addTask({ text: text, priority: 0, date: date }));
         setText("");
         onSubmit(e);
     };
 
     const handleSaveTask = (e) => {
         e.preventDefault();
-        const newTask = { ...task, text: text, priority: priority };
+        const newTask = { ...task, text: text, priority: priority, date: date };
         try {
             dispatch(updateTask(newTask));
         } catch (error) {
@@ -59,6 +63,10 @@ function AddTaskInline({
     const handlePriorityChange = (value) => {
         setPriority(value);
     };
+
+    const handleDatePick = (value) => {
+        setDate(value);
+    };
     return (
         <AddTaskForm>
             <AddTaskEditArea>
@@ -71,9 +79,18 @@ function AddTaskInline({
                 />
                 <TaskExtraButtons>
                     <ProjectButtons>
-                        <ProjectButton hasIcon iconType="calendar" id="today">
-                            Today
-                        </ProjectButton>
+                        <SchedulePopper
+                            selected={date}
+                            onDayClick={handleDatePick}
+                        >
+                            <ProjectButton
+                                hasIcon
+                                iconType="calendar"
+                                id="today"
+                            >
+                                {moment(+date).format("DD MMM")}
+                            </ProjectButton>
+                        </SchedulePopper>
                         <ProjectButton hasIcon iconType="inbox">
                             Inbox
                         </ProjectButton>

@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { tasksSelectors } from "slices/tasksSlice";
 import { Route, useRouteMatch, useHistory } from "react-router-dom";
 import TaskDetailModal from "components/TaskDetailModal";
-
 function Project(props) {
     const tasks = useSelector(tasksSelectors.selectAll);
     const match = useRouteMatch();

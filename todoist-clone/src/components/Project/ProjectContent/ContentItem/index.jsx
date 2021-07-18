@@ -15,10 +15,12 @@ import ItemActionButtons from "./ItemActionButtons";
 import { Draggable } from "react-beautiful-dnd";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { deleteTask } from "slices/tasksSlice";
+import { deleteTask, updateTask } from "slices/tasksSlice";
 import AddTaskInline from "../../AddTaskInline";
 import { useRouteMatch } from "react-router-dom";
 import { priorityColor } from "shared/utils/styles";
+import icons from "shared/utils/icons";
+import SchedulePopper from "components/SchedulePopper";
 
 function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -29,6 +31,20 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const handleDeleteClick = () => {
         dispatch(deleteTask(task._id));
     };
+    const handleUpdateTask = (task) => {
+        dispatch(updateTask(task));
+    };
+
+    const isOverdue = () => {
+        if (moment().diff(moment(+task.date), "days") > 0) {
+            return true;
+        }
+        return false;
+    };
+    const handleDayClick = (timestamp) => {
+        handleUpdateTask({ ...task, date: timestamp });
+    };
+
     return (
         <>
             {isEditing && editingId === task._id ? (
@@ -63,16 +79,30 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                             priorityColor[task.priority]
                                         }
                                     ></ColoredCircleButton>
-                                    <ContentLink
-                                        to={`${match.url}/task/${task._id}`}
-                                    >
-                                        <ContentText>{task.text}</ContentText>
+                                    <ContentLink>
+                                        <ContentText
+                                            to={`${match.url}/task/${task._id}`}
+                                        >
+                                            {task.text}
+                                        </ContentText>
                                         <ContentTags>
-                                            <Button>
-                                                {moment(task.date).format(
-                                                    "DD MMM kk:mm"
-                                                )}
-                                            </Button>
+                                            <SchedulePopper
+                                                selectedDate={task.date}
+                                                onDayClick={handleDayClick}
+                                            >
+                                                <Button
+                                                    className={
+                                                        isOverdue()
+                                                            ? "overdue"
+                                                            : ""
+                                                    }
+                                                >
+                                                    {icons.calendarSmall}
+                                                    {moment(+task.date).format(
+                                                        "DD MMM"
+                                                    )}
+                                                </Button>
+                                            </SchedulePopper>
                                             <ProjectLink>Inbox</ProjectLink>
                                         </ContentTags>
                                     </ContentLink>
@@ -84,6 +114,7 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                             setIsEditing(true);
                                             editRequest(task._id);
                                         }}
+                                        onUpdate={handleUpdateTask}
                                         task={task}
                                     ></ItemActionButtons>
                                 </ContentItemWrapper>
