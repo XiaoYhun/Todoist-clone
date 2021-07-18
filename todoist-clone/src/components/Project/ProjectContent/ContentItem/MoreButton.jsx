@@ -89,10 +89,15 @@ const SectionMenuItem = styled.li`
 `;
 
 const priorities = [1, 2, 3, 4];
-function MoreButton({ onDeleteClick, task }) {
+function MoreButton({ onDeleteClick, task, onUpdate }) {
     const [isOpenPopper, setIsOpenPopper] = useState(false);
 
     const handlePopperClose = () => {
+        setIsOpenPopper(false);
+    };
+
+    const handlePriorityClick = (priority) => {
+        onUpdate({ ...task, priority: priority });
         setIsOpenPopper(false);
     };
 
@@ -164,6 +169,9 @@ function MoreButton({ onDeleteClick, task }) {
                                         tooltip={`Priority ${item}`}
                                         className={
                                             item === task.priority && "selected"
+                                        }
+                                        onClick={() =>
+                                            handlePriorityClick(item)
                                         }
                                     />
                                 ))}

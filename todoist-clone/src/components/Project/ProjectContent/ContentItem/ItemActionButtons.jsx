@@ -43,7 +43,11 @@ function ItemActionButtons({ onDeleteClick, onEditClick, task, onUpdate }) {
                 <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
             </SchedulePopper>
             <ActionButton hasIcon iconType="comment" tooltip="Comment" />
-            <MoreButton onDeleteClick={onDeleteClick} task={task} />
+            <MoreButton
+                onDeleteClick={onDeleteClick}
+                task={task}
+                onUpdate={onUpdate}
+            />
         </ActionButtonsWrapper>
     );
 }
