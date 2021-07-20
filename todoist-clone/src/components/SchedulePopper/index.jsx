@@ -168,11 +168,12 @@ function SchedulePopper({ children, onDayClick = () => {}, selectedDay }) {
                 </SchedulePopperWrapper>
             )}
         >
-            {React.cloneElement(children, {
-                onClick: () => {
-                    setIsOpen(true);
-                },
-            })}
+            {React.isValidElement(children) &&
+                React.cloneElement(children, {
+                    onClick: () => {
+                        setIsOpen(true);
+                    },
+                })}
         </Popper>
     );
 }

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Button from "shared/components/Button";
 import styled, { css } from "styled-components";
-import MoreButton from "./MoreButton";
+import TaskContextMenu from "../../TaskContextMenu";
 import SchedulePopper from "components/SchedulePopper";
-import moment from "moment";
 const ActionButton = styled(Button)`
     width: 24px;
     height: 24px;
@@ -43,11 +42,13 @@ function ItemActionButtons({ onDeleteClick, onEditClick, task, onUpdate }) {
                 <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
             </SchedulePopper>
             <ActionButton hasIcon iconType="comment" tooltip="Comment" />
-            <MoreButton
+            <TaskContextMenu
                 onDeleteClick={onDeleteClick}
                 task={task}
                 onUpdate={onUpdate}
-            />
+            >
+                <ActionButton hasIcon iconType="more" tooltip="More" />
+            </TaskContextMenu>
         </ActionButtonsWrapper>
     );
 }

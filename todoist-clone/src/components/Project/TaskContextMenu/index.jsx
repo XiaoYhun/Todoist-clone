@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import Popper from "shared/components/Popper";
 import styled from "styled-components";
@@ -89,22 +89,25 @@ const SectionMenuItem = styled.li`
 `;
 
 const priorities = [1, 2, 3, 4];
-function MoreButton({ onDeleteClick, task, onUpdate }) {
-    const [isOpenPopper, setIsOpenPopper] = useState(false);
-
-    const handlePopperClose = () => {
-        setIsOpenPopper(false);
-    };
-
+function TaskContextMenu({
+    children,
+    onDeleteClick = () => {},
+    isContextMenu,
+    task = {},
+    onUpdate = () => {},
+    isOpen,
+    onClose = () => {},
+}) {
     const handlePriorityClick = (priority) => {
         onUpdate({ ...task, priority: priority });
-        setIsOpenPopper(false);
+        onClose();
     };
 
     return (
         <Popper
-            isOpen={isOpenPopper}
-            onClose={handlePopperClose}
+            isOpen={isOpen}
+            isContextMenu={isContextMenu}
+            onClose={onClose}
             renderContent={() => {
                 return (
                     <MenuWrapper>
@@ -209,16 +212,11 @@ function MoreButton({ onDeleteClick, task, onUpdate }) {
                 );
             }}
         >
-            <ActionButton
-                hasIcon
-                iconType="more"
-                tooltip="More"
-                onClick={() => setIsOpenPopper(true)}
-            />
+            {children}
         </Popper>
     );
 }
 
-MoreButton.propTypes = {};
+TaskContextMenu.propTypes = {};
 
-export default MoreButton;
+export default TaskContextMenu;
