@@ -21,6 +21,7 @@ import { useRouteMatch } from "react-router-dom";
 import { priorityColor } from "shared/utils/styles";
 import icons from "shared/utils/icons";
 import SchedulePopper from "components/SchedulePopper";
+import TaskContextMenu from "./../../TaskContextMenu/index";
 
 function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -31,6 +32,7 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const handleDeleteClick = () => {
         dispatch(deleteTask(task._id));
     };
+
     const handleUpdateTask = (task) => {
         dispatch(updateTask(task));
     };
@@ -80,31 +82,48 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                         }
                                     ></ColoredCircleButton>
                                     <ContentLink>
-                                        <ContentText
-                                            to={`${match.url}/task/${task._id}`}
+                                        <TaskContextMenu
+                                            isContextMenu
+                                            onDeleteClick={() =>
+                                                handleDeleteClick()
+                                            }
+                                            onUpdate={handleUpdateTask}
+                                            task={task}
                                         >
-                                            {task.text}
-                                        </ContentText>
-                                        <ContentTags>
-                                            <SchedulePopper
-                                                selectedDate={task.date}
-                                                onDayClick={handleDayClick}
-                                            >
-                                                <Button
-                                                    className={
-                                                        isOverdue()
-                                                            ? "overdue"
-                                                            : ""
-                                                    }
+                                            <>
+                                                <ContentText
+                                                    to={`${match.url}/task/${task._id}`}
                                                 >
-                                                    {icons.calendarSmall}
-                                                    {moment(+task.date).format(
-                                                        "DD MMM"
-                                                    )}
-                                                </Button>
-                                            </SchedulePopper>
-                                            <ProjectLink>Inbox</ProjectLink>
-                                        </ContentTags>
+                                                    {task.text}
+                                                </ContentText>
+                                                <ContentTags>
+                                                    <SchedulePopper
+                                                        selectedDate={task.date}
+                                                        onDayClick={
+                                                            handleDayClick
+                                                        }
+                                                    >
+                                                        <Button
+                                                            className={
+                                                                isOverdue()
+                                                                    ? "overdue"
+                                                                    : ""
+                                                            }
+                                                        >
+                                                            {
+                                                                icons.calendarSmall
+                                                            }
+                                                            {moment(
+                                                                +task.date
+                                                            ).format("DD MMM")}
+                                                        </Button>
+                                                    </SchedulePopper>
+                                                    <ProjectLink>
+                                                        Inbox
+                                                    </ProjectLink>
+                                                </ContentTags>
+                                            </>
+                                        </TaskContextMenu>
                                     </ContentLink>
                                     <ItemActionButtons
                                         onDeleteClick={() =>
