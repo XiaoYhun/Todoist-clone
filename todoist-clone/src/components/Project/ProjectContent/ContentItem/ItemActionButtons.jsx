@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Button from "shared/components/Button";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import TaskContextMenu from "../../TaskContextMenu";
 import SchedulePopper from "components/SchedulePopper";
 const ActionButton = styled(Button)`

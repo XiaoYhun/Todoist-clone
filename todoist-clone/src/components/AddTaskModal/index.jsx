@@ -14,7 +14,6 @@ import {
     SubmitButton,
 } from "./Styles";
 import Modal from "shared/components/Modal";
-import Button from "shared/components/Button";
 import SchedulePopper from "components/SchedulePopper";
 import moment from "moment";
 function AddTaskModal(props) {

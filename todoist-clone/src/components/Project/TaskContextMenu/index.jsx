@@ -1,17 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Popper from "shared/components/Popper";
 import styled from "styled-components";
 import Button from "shared/components/Button";
 import icons from "shared/utils/icons";
 import { priorityColor } from "shared/utils/styles";
-const ActionButton = styled(Button)`
-    width: 24px;
-    height: 24px;
-    margin-left: 8px;
-    justify-content: center;
-    align-items: center;
-`;
 const MenuWrapper = styled.ul`
     width: 250px;
     font-size: 13px;
@@ -164,6 +157,7 @@ function TaskContextMenu({
                             <div className="priority_holder section_menu_content">
                                 {priorities.map((item) => (
                                     <Button
+                                        key={item}
                                         hasIcon
                                         iconType={
                                             item < 4 ? "flagFill" : "flag"
@@ -171,7 +165,9 @@ function TaskContextMenu({
                                         fillColor={priorityColor[item]}
                                         tooltip={`Priority ${item}`}
                                         className={
-                                            item === task.priority && "selected"
+                                            item === task.priority
+                                                ? "selected"
+                                                : ""
                                         }
                                         onClick={() =>
                                             handlePriorityClick(item)

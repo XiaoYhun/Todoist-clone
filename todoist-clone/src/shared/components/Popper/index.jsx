@@ -89,7 +89,7 @@ function Popper({
     return (
         <div
             ref={$linkRef}
-            onContextMenu={isContextMenu ? onContextMenuClick : false}
+            onContextMenu={isContextMenu ? onContextMenuClick : undefined}
         >
             {stateIsOpen &&
                 ReactDOM.createPortal(

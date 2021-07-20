@@ -44,7 +44,6 @@ const icons = {
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            ariaHidden="true"
             className="search_icon"
         >
             <path
@@ -284,12 +283,12 @@ const icons = {
                     d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z"
                 ></path>
                 <text
-                    font-family="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
-                    font-size="9"
+                    fontFamily="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+                    fontSize="9"
                     transform="translate(4 2)"
-                    font-weight="500"
+                    fontWeight="500"
                 >
-                    <tspan x="8" y="15" text-anchor="middle">
+                    <tspan x="8" y="15" textAnchor="middle">
                         {moment().format("DD")}
                     </tspan>
                 </text>
@@ -328,7 +327,6 @@ const icons = {
             height="28"
             viewBox="0 0 28 28"
             className="scheduler-suggestions-item-icon--today"
-            ariaHidden="true"
             focusable="false"
         >
             <g fill="currentColor" fillRule="nonzero">
@@ -338,12 +336,12 @@ const icons = {
                 ></path>
                 <path d="M22 3a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h16zm0 1H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-.5 4a.5.5 0 1 1 0 1h-15a.5.5 0 0 1 0-1z"></path>
                 <text
-                    font-family="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
-                    font-size="11"
+                    fontFamily="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+                    fontSize="11"
                     transform="translate(4 2)"
-                    font-weight="500"
+                    fontWeight="500"
                 >
-                    <tspan x="9.5" y="18" text-anchor="middle">
+                    <tspan x="9.5" y="18" textAnchor="middle">
                         {moment().format("DD")}
                     </tspan>
                 </text>
@@ -356,7 +354,6 @@ const icons = {
             height="28"
             viewBox="0 0 28 28"
             className="scheduler-suggestions-item-icon--tomorrow"
-            ariaHidden="true"
             focusable="false"
         >
             <g fill="currentColor" fillRule="nonzero">
@@ -374,7 +371,6 @@ const icons = {
             height="28"
             viewBox="0 0 28 28"
             className="scheduler-suggestions-item-icon--weekend"
-            ariaHidden="true"
             focusable="false"
         >
             <path
@@ -389,7 +385,6 @@ const icons = {
             height="28"
             viewBox="0 0 28 28"
             className="scheduler-suggestions-item-icon--next-week"
-            ariaHidden="true"
             focusable="false"
         >
             <g fill="currentColor" fillRule="nonzero">
@@ -402,13 +397,7 @@ const icons = {
         </svg>
     ),
     noDate: (
-        <svg
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            ariaHidden="true"
-            focusable="false"
-        >
+        <svg width="28" height="28" viewBox="0 0 24 24" focusable="false">
             <path
                 fill="currentColor"
                 fillRule="nonzero"
@@ -459,7 +448,7 @@ const icons = {
     ),
     trash: (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-            <g fill="none" fill-rule="evenodd">
+            <g fill="none" fillRule="evenodd">
                 <path d="M0 0h24v24H0z"></path>
                 <rect
                     width="14"
@@ -486,7 +475,6 @@ const icons = {
             viewBox="0 0 12 12"
             width="12"
             height="12"
-            ariaHidden="true"
             className="dropdown_select_checkmark"
         >
             <path

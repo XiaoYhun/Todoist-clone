@@ -6,7 +6,6 @@ import AddTaskInline from "../AddTaskInline";
 import moment from "moment";
 function AddTaskSection(props) {
     const [isEditing, setIsEditing] = useState(false);
-    const [taskText, setTaskText] = useState("");
 
     return (
         <AddTaskSectionWrapper>

@@ -110,12 +110,16 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                                                     : ""
                                                             }
                                                         >
-                                                            {
-                                                                icons.calendarSmall
-                                                            }
-                                                            {moment(
-                                                                +task.date
-                                                            ).format("DD MMM")}
+                                                            <span>
+                                                                {
+                                                                    icons.calendarSmall
+                                                                }
+                                                                {moment(
+                                                                    +task.date
+                                                                ).format(
+                                                                    "DD MMM"
+                                                                )}
+                                                            </span>
                                                         </Button>
                                                     </SchedulePopper>
                                                     <ProjectLink>

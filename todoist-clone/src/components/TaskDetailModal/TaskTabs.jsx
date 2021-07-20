@@ -59,6 +59,7 @@ function TaskTabs(props) {
                 {tabs.map((tab) => (
                     <TaskTab
                         id={tab.id}
+                        key={tab.id}
                         selected={selectedTask === tab.id}
                         onClick={tabClickHandle}
                     >
