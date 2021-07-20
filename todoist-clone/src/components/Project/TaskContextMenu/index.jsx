@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Popper from "shared/components/Popper";
 import styled from "styled-components";
@@ -88,19 +88,21 @@ function TaskContextMenu({
     isContextMenu,
     task = {},
     onUpdate = () => {},
-    isOpen,
-    onClose = () => {},
 }) {
+    const [stateIsOpen, setIsOpen] = useState(false);
     const handlePriorityClick = (priority) => {
         onUpdate({ ...task, priority: priority });
-        onClose();
+        setIsOpen(false);
     };
 
     return (
         <Popper
-            isOpen={isOpen}
+            forceClose={stateIsOpen}
+            isOpen={stateIsOpen}
             isContextMenu={isContextMenu}
-            onClose={onClose}
+            onContextMenu={() => setIsOpen(true)}
+            onOpen={() => setIsOpen(true)}
+            onClose={() => setIsOpen(false)}
             renderContent={() => {
                 return (
                     <MenuWrapper>

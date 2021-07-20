@@ -13,10 +13,12 @@ import { useDetectClickOutside, useOnEscapeKeyDown } from "shared/utils/hooks";
 const $root = document.getElementById("root");
 
 function Popper({
-    isOpen,
+    isOpen: propsIsOpen,
     children,
     isContextMenu,
+    onContextMenu = () => {},
     onClose = () => {},
+    onOpen = () => {},
     renderContent = () => {},
 }) {
     const [stateIsOpen, setIsOpen] = useState(false);
@@ -25,14 +27,16 @@ function Popper({
     const $contentRef = useRef();
     const $windowRef = useRef();
     const $linkRef = useRef();
+    const isControlled = typeof propsIsOpen === "boolean";
+    const isOpen = isControlled ? propsIsOpen : stateIsOpen;
 
-    useMemo(() => {
+    useEffect(() => {
         setIsOpen(isOpen);
     }, [isOpen]);
 
-    const handleCloseClick = () => {
+    const handleClose = () => {
         setIsOpen(false);
-        onClose();
+        isControlled && onClose();
     };
 
     const calculatePos = () => {
@@ -65,6 +69,7 @@ function Popper({
             e.preventDefault();
             setContextMenuPosition({ x: e.pageX, y: e.pageY });
             setIsOpen(true);
+            isControlled && onContextMenu();
         }
     };
 
@@ -84,16 +89,16 @@ function Popper({
         };
     }, [$windowRef, $linkRef, stateIsOpen]);
 
-    useDetectClickOutside($contentRef, $windowRef, handleCloseClick);
-    useOnEscapeKeyDown(handleCloseClick);
+    useDetectClickOutside($contentRef, $windowRef, handleClose);
+    useOnEscapeKeyDown(handleClose);
     return (
         <div
             ref={$linkRef}
             onContextMenu={isContextMenu ? onContextMenuClick : undefined}
         >
-            {stateIsOpen &&
+            {isOpen &&
                 ReactDOM.createPortal(
-                    <PopperWrapper isOpen={stateIsOpen}>
+                    <PopperWrapper isOpen={isOpen}>
                         <PopperOverlay ref={$windowRef}>
                             <PopperContent
                                 ref={$contentRef}
@@ -110,6 +115,7 @@ function Popper({
                     className: "children",
                     onClick: () => {
                         setIsOpen(true);
+                        isControlled && onOpen();
                     },
                 })}
         </div>

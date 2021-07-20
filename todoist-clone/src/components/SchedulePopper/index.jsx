@@ -28,6 +28,7 @@ function SchedulePopper({ children, onDayClick = () => {}, selectedDay }) {
     const [data, setData] = useState([0, 1, 2, 3, 4]);
     const [elRefs, setElRefs] = React.useState([]);
     const [focusingMonth, setFocusingMonth] = useState(0);
+
     useEffect(() => {
         setElRefs((elRefs) =>
             Array(data.length)
@@ -67,6 +68,7 @@ function SchedulePopper({ children, onDayClick = () => {}, selectedDay }) {
     return (
         <Popper
             isOpen={isOpen}
+            onOpen={() => setIsOpen(true)}
             onClose={() => setIsOpen(false)}
             renderContent={() => (
                 <SchedulePopperWrapper>
