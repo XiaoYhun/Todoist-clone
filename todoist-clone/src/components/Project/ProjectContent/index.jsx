@@ -11,7 +11,12 @@ import ContentItem from "./ContentItem";
 import { Droppable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
-import { updateTasksOrder, saveTasksOrder } from "slices/tasksSlice";
+import {
+    updateTasksOrder,
+    saveTasksOrder,
+    updateTask,
+} from "slices/tasksSlice";
+import moment from "moment";
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -21,22 +26,40 @@ const reorder = (list, startIndex, endIndex) => {
     return result;
 };
 
-function ProjectContent({ tasksList }) {
+function ProjectContent({ todayTasks, overdueTasks }) {
     const dispatch = useDispatch();
     const [editingId, setEditingId] = useState("");
-
     const handleDragEnd = (result) => {
-        const { destination, source } = result;
-        if (!destination) {
+        const { destination, source, draggableId } = result;
+        if (
+            !destination ||
+            (destination.droppableId === "overdue" &&
+                source.droppableId === "today")
+        ) {
             return;
         }
-        let tasks = reorder(tasksList, source.index, destination.index);
-        tasks = tasks.map((item, index) => {
-            return {
-                ...item,
-                order: index,
-            };
-        });
+
+        if (
+            destination.droppableId === "today" &&
+            source.droppableId === "overdue"
+        ) {
+            let task = overdueTasks.find((task) => task._id === draggableId);
+
+            dispatch(updateTask({ ...task, date: Date.now(), order: 0 }));
+
+            return;
+        }
+
+        let tasks =
+            destination.droppableId === "overdue" ? overdueTasks : todayTasks;
+        tasks = reorder(tasks, source.index, destination.index).map(
+            (item, index) => {
+                return {
+                    ...item,
+                    order: index,
+                };
+            }
+        );
         dispatch(updateTasksOrder(tasks));
         dispatch(saveTasksOrder(tasks));
     };
@@ -53,13 +76,36 @@ function ProjectContent({ tasksList }) {
                         <h2>Overdue</h2>
                         <SectionHeaderActions>Reschedule</SectionHeaderActions>
                     </SectionHeader>
-                    <Droppable droppableId={"615615"}>
+                    <Droppable droppableId={"overdue"}>
+                        {(provided) => (
+                            <ContentList
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                style={{ marginBottom: "30px" }}
+                            >
+                                {overdueTasks.map((task) => (
+                                    <ContentItem
+                                        key={task._id}
+                                        task={task}
+                                        index={task.order}
+                                        editingId={editingId}
+                                        editRequest={handleEditRequest}
+                                    ></ContentItem>
+                                ))}
+                                {provided.placeholder}
+                            </ContentList>
+                        )}
+                    </Droppable>
+                    <SectionHeader>
+                        <h2>Today - {moment().format("ddd DD MMM")}</h2>
+                    </SectionHeader>
+                    <Droppable droppableId={"today"}>
                         {(provided) => (
                             <ContentList
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                             >
-                                {tasksList.map((task) => (
+                                {todayTasks.map((task) => (
                                     <ContentItem
                                         key={task._id}
                                         task={task}

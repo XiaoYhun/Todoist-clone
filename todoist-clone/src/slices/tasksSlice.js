@@ -2,6 +2,7 @@ import {
     createSlice,
     createAsyncThunk,
     createEntityAdapter,
+    createSelector,
 } from "@reduxjs/toolkit";
 import * as api from "shared/api";
 
@@ -102,3 +103,21 @@ export const { updateTasksOrder } = taskSlice.actions;
 export default taskSlice.reducer;
 
 export const tasksSelectors = tasksAdapter.getSelectors((state) => state.tasks);
+export const getOverdueTasks = (state) => {
+    const tasks = tasksAdapter.getSelectors().selectAll(state.tasks);
+    return tasks.filter((task) => {
+        const date = new Date(+task.date);
+        const today = new Date().setHours(0, 0, 0, 0);
+        if (date < today) return true;
+        return false;
+    });
+};
+export const getTodayTasks = (state) => {
+    const tasks = tasksAdapter.getSelectors().selectAll(state.tasks);
+    return tasks.filter((task) => {
+        const date = new Date(+task.date).setHours(0, 0, 0, 0);
+        const today = new Date().setHours(0, 0, 0, 0);
+        if (date >= today) return true;
+        return false;
+    });
+};
