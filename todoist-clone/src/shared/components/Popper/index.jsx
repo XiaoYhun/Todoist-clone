@@ -112,7 +112,6 @@ function Popper({
                 )}
             {React.isValidElement(children) &&
                 React.cloneElement(children, {
-                    className: "children",
                     onClick: () => {
                         setIsOpen(true);
                         isControlled && onOpen();

@@ -22,7 +22,7 @@ import { priorityColor } from "shared/utils/styles";
 import icons from "shared/utils/icons";
 import SchedulePopper from "components/SchedulePopper";
 import TaskContextMenu from "./../../TaskContextMenu/index";
-
+import { formatDate } from "shared/utils/dateTime";
 function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const [isEditing, setIsEditing] = useState(false);
 
@@ -98,7 +98,7 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                                 </ContentText>
                                                 <ContentTags>
                                                     <SchedulePopper
-                                                        selectedDate={task.date}
+                                                        selectedDay={+task.date}
                                                         onDayClick={
                                                             handleDayClick
                                                         }
@@ -114,10 +114,8 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                                                 {
                                                                     icons.calendarSmall
                                                                 }
-                                                                {moment(
+                                                                {formatDate(
                                                                     +task.date
-                                                                ).format(
-                                                                    "DD MMM"
                                                                 )}
                                                             </span>
                                                         </Button>

@@ -38,7 +38,10 @@ function ItemActionButtons({ onDeleteClick, onEditClick, task, onUpdate }) {
                 tooltip="Edit"
                 onClick={onEditClick}
             />
-            <SchedulePopper onDayClick={handleDayClick} selectedDay={task.date}>
+            <SchedulePopper
+                onDayClick={handleDayClick}
+                selectedDay={+task.date}
+            >
                 <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
             </SchedulePopper>
             <ActionButton hasIcon iconType="comment" tooltip="Comment" />

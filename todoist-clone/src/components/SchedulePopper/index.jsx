@@ -64,7 +64,6 @@ function SchedulePopper({ children, onDayClick = () => {}, selectedDay }) {
             }
         });
     };
-
     return (
         <Popper
             isOpen={isOpen}

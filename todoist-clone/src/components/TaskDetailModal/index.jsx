@@ -81,7 +81,7 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
 
                             <TaskOverviewSub>
                                 <SchedulePopper
-                                    selectedDay={task.date}
+                                    selectedDay={+task.date}
                                     onDayClick={handleUpdateDate}
                                 >
                                     <DateDueButton hasIcon iconType="calendar">
