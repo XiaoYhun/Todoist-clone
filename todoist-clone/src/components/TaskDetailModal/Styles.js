@@ -52,13 +52,14 @@ export const CircleButton = styled(Button)`
     & svg {
         overflow: overlay;
         margin-top: -6px;
-        margin-left: -7px;
+        margin-left: -9px;
         opacity: 0;
         height: 16px;
         width: 16px;
         transition: opacity 0.15s cubic-bezier(0.4, 0, 1, 1);
     }
-    &:hover svg {
+    &:hover svg,
+    &.done svg {
         opacity: 1;
     }
     ${(props) =>
@@ -83,6 +84,11 @@ export const TaskOverviewHeader = styled.div`
     cursor: text;
     margin: -4px 0 0 -4px;
     word-break: break-word;
+
+    &.done {
+        text-decoration: line-through;
+        color: grey;
+    }
 `;
 export const TaskOverviewSub = styled.div`
     display: flex;
@@ -97,6 +103,12 @@ export const TaskOverviewFooter = styled.div`
     display: flex;
     justify-content: flex-end;
     width: 100%;
+
+    &.disabled > * {
+        cursor: default;
+        opacity: 0.4;
+        pointer-events: none;
+    }
 `;
 
 export const DateDueButton = styled(Button)`

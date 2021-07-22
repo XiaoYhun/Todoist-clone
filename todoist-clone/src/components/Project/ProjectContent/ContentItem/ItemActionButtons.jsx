@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Button from "shared/components/Button";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import TaskContextMenu from "../../TaskContextMenu";
 import SchedulePopper from "components/SchedulePopper";
 const ActionButton = styled(Button)`
@@ -10,6 +10,13 @@ const ActionButton = styled(Button)`
     margin-left: 8px;
     justify-content: center;
     align-items: center;
+    ${(props) =>
+        props.disabled &&
+        css`
+            & {
+                opacity: 0.3;
+            }
+        `}
 `;
 export const ActionButtonsWrapper = styled.div`
     display: flex;
@@ -37,18 +44,30 @@ function ItemActionButtons({ onDeleteClick, onEditClick, task, onUpdate }) {
                 iconType="edit"
                 tooltip="Edit"
                 onClick={onEditClick}
+                disabled={task.done}
             />
             <SchedulePopper
                 onDayClick={handleDayClick}
                 selectedDay={+task.date}
             >
-                <ActionButton hasIcon iconType="schedule" tooltip="Schedule" />
+                <ActionButton
+                    hasIcon
+                    iconType="schedule"
+                    tooltip="Schedule"
+                    disabled={task.done}
+                />
             </SchedulePopper>
-            <ActionButton hasIcon iconType="comment" tooltip="Comment" />
+            <ActionButton
+                hasIcon
+                iconType="comment"
+                tooltip="Comment"
+                disabled={task.done}
+            />
             <TaskContextMenu
                 onDeleteClick={onDeleteClick}
                 task={task}
                 onUpdate={onUpdate}
+                disabled={task.done}
             >
                 <ActionButton hasIcon iconType="more" tooltip="More" />
             </TaskContextMenu>

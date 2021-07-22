@@ -22,7 +22,12 @@ import moment from "moment";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
-function SchedulePopper({ children, onDayClick = () => {}, selectedDay }) {
+function SchedulePopper({
+    children,
+    onDayClick = () => {},
+    selectedDay,
+    disabled,
+}) {
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [data, setData] = useState([0, 1, 2, 3, 4]);
@@ -69,6 +74,7 @@ function SchedulePopper({ children, onDayClick = () => {}, selectedDay }) {
             isOpen={isOpen}
             onOpen={() => setIsOpen(true)}
             onClose={() => setIsOpen(false)}
+            disabled={disabled}
             renderContent={() => (
                 <SchedulePopperWrapper>
                     <ScheduleInput>
@@ -173,6 +179,10 @@ function SchedulePopper({ children, onDayClick = () => {}, selectedDay }) {
                 React.cloneElement(children, {
                     onClick: () => {
                         setIsOpen(true);
+                    },
+                    style: {
+                        ...children.style,
+                        pointerEvents: disabled && "none",
                     },
                 })}
         </Popper>

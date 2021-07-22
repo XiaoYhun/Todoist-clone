@@ -19,6 +19,9 @@ function SelectDropdown({
     return (
         <Popper
             isOpen={isOpen}
+            onOpen={() => {
+                setIsOpen(true);
+            }}
             onClose={() => setIsOpen(false)}
             renderContent={() => (
                 <SelectDropdownWrapper>

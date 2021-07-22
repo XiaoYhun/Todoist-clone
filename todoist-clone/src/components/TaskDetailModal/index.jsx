@@ -28,11 +28,11 @@ import { updateTask } from "slices/tasksSlice";
 import SchedulePopper from "./../SchedulePopper/index";
 function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
     const [isEditing, setIsEditing] = useState(false);
-    const dispatch = useDispatch();
     const task = useSelector((state) =>
         tasksSelectors.selectById(state, taskId)
     );
-
+    const dispatch = useDispatch();
+    const isDone = task && task.done;
     const handleUpdateTask = (newTask) => {
         dispatch(updateTask(newTask));
     };
@@ -44,7 +44,9 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
     const handleUpdateDate = (date) => {
         handleUpdateTask({ ...task, date: date });
     };
-
+    const handleDoneClick = () => {
+        handleUpdateTask({ ...task, done: !task.done });
+    };
     return task ? (
         <Modal isOpen={isOpen} onClose={onClose} isGrow>
             <TaskDetailModalWrapper>
@@ -54,7 +56,7 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                         <ProjectName>Inbox</ProjectName>
                     </ProjectLink>
                 </DetailHeader>
-                {isEditing ? (
+                {isEditing && !isDone ? (
                     <AddTaskInline
                         isEdit
                         onSave={(text) => setIsEditing(false)}
@@ -71,10 +73,13 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                                 task.priority &&
                                 priorityColor[task.priority]
                             }
+                            className={task.done && "done"}
+                            onClick={handleDoneClick}
                         ></CircleButton>
                         <TaskOverviewMain>
                             <TaskOverviewHeader
                                 onClick={() => setIsEditing(true)}
+                                className={isDone && "done"}
                             >
                                 {task && task.text}
                             </TaskOverviewHeader>
@@ -83,6 +88,7 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                                 <SchedulePopper
                                     selectedDay={+task.date}
                                     onDayClick={handleUpdateDate}
+                                    disabled={isDone}
                                 >
                                     <DateDueButton hasIcon iconType="calendar">
                                         {task &&
@@ -90,7 +96,9 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                                     </DateDueButton>
                                 </SchedulePopper>
                             </TaskOverviewSub>
-                            <TaskOverviewFooter>
+                            <TaskOverviewFooter
+                                className={isDone && "disabled"}
+                            >
                                 <ActionButton
                                     hasIcon
                                     iconType="list"

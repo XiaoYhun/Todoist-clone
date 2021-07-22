@@ -15,29 +15,6 @@ export const DragButton = styled(Button)`
     flex-wrap: nowrap;
     cursor: move;
 `;
-export const ContentItemWrapper = styled.li`
-    list-style: none;
-    min-height: 55px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 2px;
-    padding-left: 2px;
-    position: relative;
-    border-bottom: 1px solid #eee;
-    background-color: white;
-    transition: box-shadow 0.2s ease;
-    ${(props) =>
-        props.isDragging &&
-        css`
-            transform: rotate(1deg) !important;
-            box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.28);
-        `}
-
-    &:hover ${ActionButtonsWrapper}, &:hover ${DragButton} {
-        opacity: 1;
-    }
-`;
 
 export const ContentLink = styled.div`
     flex: 1;
@@ -84,5 +61,34 @@ export const ProjectLink = styled.span`
 
     &:hover {
         color: black;
+    }
+`;
+
+export const ContentItemWrapper = styled.li`
+    list-style: none;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 2px;
+    padding-left: 2px;
+    position: relative;
+    border-bottom: 1px solid #eee;
+    background-color: white;
+    transition: box-shadow 0.2s ease;
+    ${(props) =>
+        props.isDragging &&
+        css`
+            transform: rotate(1deg) !important;
+            box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.28);
+        `}
+
+    &:hover ${ActionButtonsWrapper}, &:hover ${DragButton} {
+        opacity: 1;
+    }
+
+    &.done ${ContentText} {
+        color: grey;
+        text-decoration: line-through;
     }
 `;

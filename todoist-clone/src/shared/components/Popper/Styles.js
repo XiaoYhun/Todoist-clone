@@ -26,7 +26,7 @@ export const PopperOverlay = styled.div`
 export const PopperContent = styled.div`
     position: absolute;
     min-width: 250px;
-    min-height: 100px;
+    min-height: 25px;
     border-radius: 5px;
     background-color: white;
     box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);

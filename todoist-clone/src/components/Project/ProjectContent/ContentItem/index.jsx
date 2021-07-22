@@ -47,6 +47,9 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
         handleUpdateTask({ ...task, date: timestamp });
     };
 
+    const handleDoneClick = () => {
+        handleUpdateTask({ ...task, done: !task.done });
+    };
     return (
         <>
             {isEditing && editingId === task._id ? (
@@ -69,6 +72,7 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                         snapshot.isDragging &&
                                         !snapshot.isDropAnimating
                                     }
+                                    className={task.done && "done"}
                                 >
                                     <DragButton
                                         hasIcon
@@ -80,7 +84,9 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                             task.priority &&
                                             priorityColor[task.priority]
                                         }
-                                    ></ColoredCircleButton>
+                                        onClick={handleDoneClick}
+                                        done={task.done}
+                                    />
                                     <ContentLink>
                                         <TaskContextMenu
                                             isContextMenu
@@ -89,6 +95,7 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                             }
                                             onUpdate={handleUpdateTask}
                                             task={task}
+                                            disabled={task.done}
                                         >
                                             <>
                                                 <ContentText

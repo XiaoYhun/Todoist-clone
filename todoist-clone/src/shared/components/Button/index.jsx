@@ -31,6 +31,13 @@ export const ButtonWrapper = styled.button`
                 fill: ${props.fillColor};
             }
         `}
+    ${(props) =>
+        props.disabled &&
+        css`
+            & {
+                pointer-events: none;
+            }
+        `}
 `;
 const Button = ({
     hasIcon,
@@ -39,6 +46,7 @@ const Button = ({
     className,
     tooltip,
     fillColor,
+    disabled,
     ...buttonProps
 }) => {
     const [openTooltip, setOpenTooltip] = useState(false);
@@ -49,6 +57,7 @@ const Button = ({
             type="button"
             ref={buttonRef}
             fillColor={fillColor}
+            disabled={disabled}
             {...buttonProps}
             onMouseEnter={() => setOpenTooltip(true)}
             onMouseLeave={() => setOpenTooltip(false)}

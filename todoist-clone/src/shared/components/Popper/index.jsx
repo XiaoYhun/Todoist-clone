@@ -20,6 +20,7 @@ function Popper({
     onClose = () => {},
     onOpen = () => {},
     renderContent = () => {},
+    disabled,
 }) {
     const [stateIsOpen, setIsOpen] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -31,7 +32,7 @@ function Popper({
     const isOpen = isControlled ? propsIsOpen : stateIsOpen;
 
     useEffect(() => {
-        setIsOpen(isOpen);
+        !disabled && setIsOpen(isOpen);
     }, [isOpen]);
 
     const handleClose = () => {
@@ -113,8 +114,10 @@ function Popper({
             {React.isValidElement(children) &&
                 React.cloneElement(children, {
                     onClick: () => {
-                        setIsOpen(true);
-                        isControlled && onOpen();
+                        if (!disabled) {
+                            setIsOpen(true);
+                            isControlled && onOpen();
+                        }
                     },
                 })}
         </div>

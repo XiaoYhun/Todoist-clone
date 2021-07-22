@@ -87,6 +87,7 @@ function TaskContextMenu({
     onDeleteClick = () => {},
     isContextMenu,
     task = {},
+    disabled,
     onUpdate = () => {},
 }) {
     const [stateIsOpen, setIsOpen] = useState(false);
@@ -106,99 +107,131 @@ function TaskContextMenu({
             renderContent={() => {
                 return (
                     <MenuWrapper>
-                        <IconMenuItem>
-                            <div className="icon_menu">{icons.edit}</div>
-                            <div className="content_menu">Edit task</div>
-                        </IconMenuItem>
-                        <IconMenuItem>
-                            <div className="icon_menu">{icons.list}</div>
-                            <div className="content_menu">Go to project</div>
-                        </IconMenuItem>
-                        <MenuSeparator />
-                        <SectionMenuItem>
-                            <div className="section_menu_label">Schedule</div>
-                            <div className="schedule_holder section_menu_content">
-                                <Button
-                                    hasIcon
-                                    iconType={"calendarToday"}
-                                    tooltip={"Today"}
-                                    style={{ color: "#058527" }}
-                                ></Button>
-                                <Button
-                                    hasIcon
-                                    iconType={"sun"}
-                                    tooltip={"Tomorrow"}
-                                    style={{ color: "#ad6200" }}
-                                ></Button>
-                                <Button
-                                    hasIcon
-                                    iconType={"chair"}
-                                    tooltip={"This weekend"}
-                                    style={{ color: "#246fe0" }}
-                                ></Button>
-                                <Button
-                                    hasIcon
-                                    iconType={"nextWeek"}
-                                    tooltip={"Next Week"}
-                                    style={{ color: "#692fc2" }}
-                                ></Button>
-                                <Button
-                                    hasIcon
-                                    iconType={"noDate"}
-                                    tooltip={"No date"}
-                                ></Button>
-                                <Button
-                                    hasIcon
-                                    iconType={"more"}
-                                    tooltip={"More"}
-                                ></Button>
-                            </div>
-                        </SectionMenuItem>
-                        <SectionMenuItem>
-                            <div className="section_menu_label">Priority</div>
-                            <div className="priority_holder section_menu_content">
-                                {priorities.map((item) => (
-                                    <Button
-                                        key={item}
-                                        hasIcon
-                                        iconType={
-                                            item < 4 ? "flagFill" : "flag"
-                                        }
-                                        fillColor={priorityColor[item]}
-                                        tooltip={`Priority ${item}`}
-                                        className={
-                                            item === task.priority
-                                                ? "selected"
-                                                : ""
-                                        }
-                                        onClick={() =>
-                                            handlePriorityClick(item)
-                                        }
-                                    />
-                                ))}
-                            </div>
-                        </SectionMenuItem>
-                        <MenuSeparator />
-                        <IconMenuItem>
-                            <div className="icon_menu">{icons.clock}</div>
-                            <div className="content_menu">Reminders</div>
-                        </IconMenuItem>
-                        <MenuSeparator />
-                        <IconMenuItem>
-                            <div className="icon_menu">{icons.moveTo}</div>
-                            <div className="content_menu">Move to project</div>
-                        </IconMenuItem>
-                        <IconMenuItem>
-                            <div className="icon_menu">{icons.duplicate}</div>
-                            <div className="content_menu">Duplicate</div>
-                        </IconMenuItem>
-                        <IconMenuItem>
-                            <div className="icon_menu">{icons.link}</div>
-                            <div className="content_menu">
-                                Copy link to task
-                            </div>
-                        </IconMenuItem>
-                        <MenuSeparator />
+                        {!disabled && (
+                            <>
+                                <IconMenuItem>
+                                    <div className="icon_menu">
+                                        {icons.edit}
+                                    </div>
+                                    <div className="content_menu">
+                                        Edit task
+                                    </div>
+                                </IconMenuItem>
+                                <IconMenuItem>
+                                    <div className="icon_menu">
+                                        {icons.list}
+                                    </div>
+                                    <div className="content_menu">
+                                        Go to project
+                                    </div>
+                                </IconMenuItem>
+                                <MenuSeparator />
+                                <SectionMenuItem>
+                                    <div className="section_menu_label">
+                                        Schedule
+                                    </div>
+                                    <div className="schedule_holder section_menu_content">
+                                        <Button
+                                            hasIcon
+                                            iconType={"calendarToday"}
+                                            tooltip={"Today"}
+                                            style={{ color: "#058527" }}
+                                        ></Button>
+                                        <Button
+                                            hasIcon
+                                            iconType={"sun"}
+                                            tooltip={"Tomorrow"}
+                                            style={{ color: "#ad6200" }}
+                                        ></Button>
+                                        <Button
+                                            hasIcon
+                                            iconType={"chair"}
+                                            tooltip={"This weekend"}
+                                            style={{ color: "#246fe0" }}
+                                        ></Button>
+                                        <Button
+                                            hasIcon
+                                            iconType={"nextWeek"}
+                                            tooltip={"Next Week"}
+                                            style={{ color: "#692fc2" }}
+                                        ></Button>
+                                        <Button
+                                            hasIcon
+                                            iconType={"noDate"}
+                                            tooltip={"No date"}
+                                        ></Button>
+                                        <Button
+                                            hasIcon
+                                            iconType={"more"}
+                                            tooltip={"More"}
+                                        ></Button>
+                                    </div>
+                                </SectionMenuItem>
+                                <SectionMenuItem>
+                                    <div className="section_menu_label">
+                                        Priority
+                                    </div>
+                                    <div className="priority_holder section_menu_content">
+                                        {priorities.map((item) => (
+                                            <Button
+                                                key={item}
+                                                hasIcon
+                                                iconType={
+                                                    item < 4
+                                                        ? "flagFill"
+                                                        : "flag"
+                                                }
+                                                fillColor={priorityColor[item]}
+                                                tooltip={`Priority ${item}`}
+                                                className={
+                                                    item === task.priority
+                                                        ? "selected"
+                                                        : ""
+                                                }
+                                                onClick={() =>
+                                                    handlePriorityClick(item)
+                                                }
+                                            />
+                                        ))}
+                                    </div>
+                                </SectionMenuItem>
+                                <MenuSeparator />
+                                <IconMenuItem>
+                                    <div className="icon_menu">
+                                        {icons.clock}
+                                    </div>
+                                    <div className="content_menu">
+                                        Reminders
+                                    </div>
+                                </IconMenuItem>
+                                <MenuSeparator />
+                                <IconMenuItem>
+                                    <div className="icon_menu">
+                                        {icons.moveTo}
+                                    </div>
+                                    <div className="content_menu">
+                                        Move to project
+                                    </div>
+                                </IconMenuItem>
+                                <IconMenuItem>
+                                    <div className="icon_menu">
+                                        {icons.duplicate}
+                                    </div>
+                                    <div className="content_menu">
+                                        Duplicate
+                                    </div>
+                                </IconMenuItem>
+                                <IconMenuItem>
+                                    <div className="icon_menu">
+                                        {icons.link}
+                                    </div>
+                                    <div className="content_menu">
+                                        Copy link to task
+                                    </div>
+                                </IconMenuItem>
+                                <MenuSeparator />
+                            </>
+                        )}
                         <IconMenuItem
                             className="menu_item_delete"
                             onClick={onDeleteClick}

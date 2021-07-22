@@ -23,7 +23,8 @@ const CircleButton = styled(Button)`
         width: 16px;
         transition: opacity 0.15s cubic-bezier(0.4, 0, 1, 1);
     }
-    &:hover svg {
+    &:hover svg,
+    &.done svg {
         opacity: 1;
     }
     ${(props) =>
@@ -37,11 +38,19 @@ const CircleButton = styled(Button)`
         `}
 `;
 
-const ColoredCircleButton = forwardRef(({ color }, ref) => {
-    return (
-        <CircleButton hasIcon iconType="circle" color={color}></CircleButton>
-    );
-});
+const ColoredCircleButton = forwardRef(
+    ({ color, done = false, ...propsButton }, ref) => {
+        return (
+            <CircleButton
+                hasIcon
+                iconType="circle"
+                color={color}
+                className={done && "done"}
+                {...propsButton}
+            ></CircleButton>
+        );
+    }
+);
 
 ColoredCircleButton.propTypes = {};
 
