@@ -15,7 +15,7 @@ import ItemActionButtons from "./ItemActionButtons";
 import { Draggable } from "react-beautiful-dnd";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { deleteTask, updateTask } from "slices/tasksSlice";
+import { addTask, deleteTask, updateTask } from "slices/tasksSlice";
 import AddTaskInline from "../../AddTaskInline";
 import { useRouteMatch } from "react-router-dom";
 import { priorityColor } from "shared/utils/styles";
@@ -50,6 +50,14 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const handleDoneClick = () => {
         handleUpdateTask({ ...task, done: !task.done });
     };
+    const handleEditClick = () => {
+        setIsEditing(true);
+        editRequest(task._id);
+    };
+    const handleDuplicateClick = () => {
+        dispatch(addTask({ ...task, _id: undefined }));
+    };
+
     return (
         <>
             {isEditing && editingId === task._id ? (
@@ -94,6 +102,11 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                                 handleDeleteClick()
                                             }
                                             onUpdate={handleUpdateTask}
+                                            onEditClick={handleEditClick}
+                                            onScheduleClick={handleDayClick}
+                                            onDuplicateClick={
+                                                handleDuplicateClick
+                                            }
                                             task={task}
                                             disabled={task.done}
                                         >
@@ -138,11 +151,9 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                         onDeleteClick={() =>
                                             handleDeleteClick()
                                         }
-                                        onEditClick={() => {
-                                            setIsEditing(true);
-                                            editRequest(task._id);
-                                        }}
+                                        onEditClick={handleEditClick}
                                         onUpdate={handleUpdateTask}
+                                        onDuplicateClick={handleDuplicateClick}
                                         task={task}
                                     ></ItemActionButtons>
                                 </ContentItemWrapper>

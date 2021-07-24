@@ -32,7 +32,13 @@ export const ActionButtonsWrapper = styled.div`
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
-function ItemActionButtons({ onDeleteClick, onEditClick, task, onUpdate }) {
+function ItemActionButtons({
+    onDeleteClick,
+    onEditClick,
+    task,
+    onUpdate,
+    onDuplicateClick,
+}) {
     const handleDayClick = (timestamp) => {
         onUpdate({ ...task, date: timestamp });
     };
@@ -68,6 +74,9 @@ function ItemActionButtons({ onDeleteClick, onEditClick, task, onUpdate }) {
                 task={task}
                 onUpdate={onUpdate}
                 disabled={task.done}
+                onEditClick={onEditClick}
+                onScheduleClick={handleDayClick}
+                onDuplicateClick={onDuplicateClick}
             >
                 <ActionButton hasIcon iconType="more" tooltip="More" />
             </TaskContextMenu>

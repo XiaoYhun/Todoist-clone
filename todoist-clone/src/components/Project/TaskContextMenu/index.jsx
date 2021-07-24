@@ -5,6 +5,9 @@ import styled from "styled-components";
 import Button from "shared/components/Button";
 import icons from "shared/utils/icons";
 import { priorityColor } from "shared/utils/styles";
+import { useRouteMatch } from "react-router-dom";
+import moment from "moment";
+
 const MenuWrapper = styled.ul`
     width: 250px;
     font-size: 13px;
@@ -85,15 +88,33 @@ const priorities = [1, 2, 3, 4];
 function TaskContextMenu({
     children,
     onDeleteClick = () => {},
+    onEditClick = () => {},
+    onScheduleClick = () => {},
+    onDuplicateClick = () => {},
     isContextMenu,
     task = {},
     disabled,
     onUpdate = () => {},
 }) {
     const [stateIsOpen, setIsOpen] = useState(false);
+    const match = useRouteMatch();
+
     const handlePriorityClick = (priority) => {
         onUpdate({ ...task, priority: priority });
         setIsOpen(false);
+    };
+
+    const handleScheduleClick = (day) => {
+        onScheduleClick(day);
+        setIsOpen(false);
+    };
+    const handleCopyLinkClick = () => {
+        const el = document.createElement("input");
+        el.value = `${window.location.origin}/project/task/${task._id}`;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
     };
 
     return (
@@ -109,7 +130,7 @@ function TaskContextMenu({
                     <MenuWrapper>
                         {!disabled && (
                             <>
-                                <IconMenuItem>
+                                <IconMenuItem onClick={onEditClick}>
                                     <div className="icon_menu">
                                         {icons.edit}
                                     </div>
@@ -136,24 +157,46 @@ function TaskContextMenu({
                                             iconType={"calendarToday"}
                                             tooltip={"Today"}
                                             style={{ color: "#058527" }}
+                                            onClick={() =>
+                                                handleScheduleClick(
+                                                    moment().valueOf()
+                                                )
+                                            }
                                         ></Button>
                                         <Button
                                             hasIcon
                                             iconType={"sun"}
                                             tooltip={"Tomorrow"}
                                             style={{ color: "#ad6200" }}
+                                            onClick={() =>
+                                                handleScheduleClick(
+                                                    moment()
+                                                        .add(1, "days")
+                                                        .valueOf()
+                                                )
+                                            }
                                         ></Button>
                                         <Button
                                             hasIcon
                                             iconType={"chair"}
                                             tooltip={"This weekend"}
                                             style={{ color: "#246fe0" }}
+                                            onClick={() =>
+                                                handleScheduleClick(
+                                                    moment().day(7).valueOf()
+                                                )
+                                            }
                                         ></Button>
                                         <Button
                                             hasIcon
                                             iconType={"nextWeek"}
                                             tooltip={"Next Week"}
                                             style={{ color: "#692fc2" }}
+                                            onClick={() =>
+                                                handleScheduleClick(
+                                                    moment().day(8).valueOf()
+                                                )
+                                            }
                                         ></Button>
                                         <Button
                                             hasIcon
@@ -213,7 +256,12 @@ function TaskContextMenu({
                                         Move to project
                                     </div>
                                 </IconMenuItem>
-                                <IconMenuItem>
+                                <IconMenuItem
+                                    onClick={() => {
+                                        setIsOpen(false);
+                                        onDuplicateClick(task._id);
+                                    }}
+                                >
                                     <div className="icon_menu">
                                         {icons.duplicate}
                                     </div>
@@ -221,7 +269,12 @@ function TaskContextMenu({
                                         Duplicate
                                     </div>
                                 </IconMenuItem>
-                                <IconMenuItem>
+                                <IconMenuItem
+                                    onClick={() => {
+                                        setIsOpen(false);
+                                        handleCopyLinkClick();
+                                    }}
+                                >
                                     <div className="icon_menu">
                                         {icons.link}
                                     </div>
