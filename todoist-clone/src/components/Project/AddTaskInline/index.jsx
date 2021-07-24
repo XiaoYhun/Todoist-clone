@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
     AddTaskForm,
@@ -19,6 +19,11 @@ import { priorityColor } from "shared/utils/styles";
 import PrioritySelectDropdown from "./../../PrioritySelectDropdown/index";
 import SchedulePopper from "components/SchedulePopper";
 import moment from "moment";
+import {
+    useOnEnterKeyDown,
+    useOnEscapeKeyDown,
+    useStateCallback,
+} from "shared/utils/hooks";
 function AddTaskInline({
     onSubmit = () => {},
     onSave = () => {},
@@ -26,32 +31,49 @@ function AddTaskInline({
     isEdit = false,
     task = {},
 }) {
-    const [text, setText] = useState(isEdit ? task.text : "");
+    const [text, setText] = useStateCallback(isEdit ? task.text : "");
     const [priority, setPriority] = useState(isEdit ? task.priority : 0);
     const [date, setDate] = useState(isEdit ? task.date : Date.now());
     const dispatch = useDispatch();
-
+    const isSaving = useRef(false);
     useEffect(() => {
         if (isEdit && task.text) {
             setText(task.text);
         }
     }, [isEdit, task.text]);
 
+    useEffect(() => {
+        if (isSaving.current) {
+            isSaving.current = false;
+            if (isEdit) {
+                const newTask = {
+                    ...task,
+                    text: text,
+                    priority: priority,
+                    date: date,
+                };
+                dispatch(updateTask(newTask));
+                setText("");
+                onSave(text);
+            } else {
+                dispatch(addTask({ text: text, priority: 0, date: date }));
+                setText("");
+                onSubmit();
+            }
+        }
+    }, [text]);
+
     const handleSubmitNewTask = (e) => {
-        e.preventDefault();
+        e && e.preventDefault();
         dispatch(addTask({ text: text, priority: 0, date: date }));
         setText("");
         onSubmit(e);
     };
 
     const handleSaveTask = (e) => {
-        e.preventDefault();
+        e && e.preventDefault();
         const newTask = { ...task, text: text, priority: priority, date: date };
-        try {
-            dispatch(updateTask(newTask));
-        } catch (error) {
-            console.log(error);
-        }
+        dispatch(updateTask(newTask));
         setText("");
         onSave(text);
     };
@@ -63,9 +85,17 @@ function AddTaskInline({
     const handlePriorityChange = (value) => {
         setPriority(value);
     };
-
     const handleDatePick = (value) => {
         setDate(value);
+    };
+
+    useOnEnterKeyDown();
+
+    const handleKeyPress = (e) => {
+        if (e.keyCode === 13) {
+            setText(e.target.innerText);
+            isSaving.current = true;
+        }
     };
     return (
         <AddTaskForm>
@@ -76,6 +106,8 @@ function AddTaskInline({
                     data-placeholder="Task name"
                     dangerouslySetInnerHTML={{ __html: text }}
                     onBlur={emitChange}
+                    onKeyDown={handleKeyPress}
+                    tabIndex={0}
                 />
                 <TaskExtraButtons>
                     <ProjectButtons>

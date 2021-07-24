@@ -25,6 +25,7 @@ export const AddTaskInput = styled.div`
     &:empty:before {
         color: #999;
         content: attr(data-placeholder);
+        cursor: text;
     }
 `;
 export const TaskExtraButtons = styled.div`
