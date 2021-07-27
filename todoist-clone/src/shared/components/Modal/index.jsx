@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, Fragment } from "react";
+import React, {
+    useState,
+    useEffect,
+    useRef,
+    Fragment,
+    useImperativeHandle,
+} from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Button from "shared/components/Button";
@@ -21,35 +27,41 @@ const defaultProps = {
 };
 
 const $root = document.getElementById("root");
-function Modal({ children, isOpen, onClose = () => {}, isGrow }) {
+function Modal({ children, isOpen, onClose = () => {}, isGrow }, ref) {
     const [stateIsOpen, setIsOpen] = useState(isOpen);
     useEffect(() => {
         setIsOpen(isOpen);
     }, [isOpen]);
 
-    const $contentRef = useRef();
-    const $overlayRef = useRef();
-
-    const handleCloseClick = () => {
+    const handleClose = () => {
         setIsOpen(false);
         onClose();
     };
+    useOnEscapeKeyDown(handleClose);
 
-    useDetectClickOutside($contentRef, $overlayRef, handleCloseClick);
-    useOnEscapeKeyDown(handleCloseClick);
+    useImperativeHandle(
+        ref,
+        () => ({
+            close: handleClose,
+        }),
+        []
+    );
 
     return (
         <Fragment>
             {stateIsOpen &&
                 ReactDOM.createPortal(
                     <ModalWrapper isOpen={stateIsOpen}>
-                        <ModalOverlay ref={$overlayRef}>
-                            <ModalContent ref={$contentRef} isGrow={isGrow}>
+                        <ModalOverlay onClick={handleClose}>
+                            <ModalContent
+                                isGrow={isGrow}
+                                onClick={(e) => e.stopPropagation()}
+                            >
                                 <CloseIcon>
                                     <Button
                                         hasIcon
                                         iconType="close"
-                                        onClick={handleCloseClick}
+                                        onClick={handleClose}
                                     ></Button>
                                 </CloseIcon>
                                 {children}
@@ -65,4 +77,4 @@ function Modal({ children, isOpen, onClose = () => {}, isGrow }) {
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;
 
-export default Modal;
+export default React.forwardRef(Modal);

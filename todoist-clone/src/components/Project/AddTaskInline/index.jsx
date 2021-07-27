@@ -24,6 +24,7 @@ import {
     useOnEscapeKeyDown,
     useStateCallback,
 } from "shared/utils/hooks";
+import { formatDate } from "shared/utils/dateTime";
 function AddTaskInline({
     onSubmit = () => {},
     onSave = () => {},
@@ -120,7 +121,7 @@ function AddTaskInline({
                                 iconType="calendar"
                                 id="today"
                             >
-                                {moment(+date).format("DD MMM")}
+                                {formatDate(+date)}
                             </ProjectButton>
                         </SchedulePopper>
                         <ProjectButton hasIcon iconType="inbox">

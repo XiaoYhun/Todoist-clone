@@ -30,6 +30,12 @@ export const AddTaskInput = styled.div`
     margin-bottom: 15px;
     font-size: 15px;
     outline: none;
+
+    &:empty:before {
+        color: #999;
+        content: attr(data-placeholder);
+        cursor: text;
+    }
 `;
 
 export const PlaceHolder = styled.div`
