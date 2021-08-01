@@ -143,7 +143,7 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                         </TaskOverviewMain>
                     </TaskOverview>
                 )}
-                <TaskTabs>123</TaskTabs>
+                <TaskTabs task={task}></TaskTabs>
             </TaskDetailModalWrapper>
         </Modal>
     ) : (

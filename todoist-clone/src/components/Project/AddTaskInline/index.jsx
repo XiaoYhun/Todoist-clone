@@ -14,16 +14,11 @@ import {
     CancelButton,
 } from "./Styles";
 import { useDispatch } from "react-redux";
-import { addTask, updateTask } from "slices/tasksSlice";
+import { addTask, updateTask, addSubTask } from "slices/tasksSlice";
 import { priorityColor } from "shared/utils/styles";
 import PrioritySelectDropdown from "./../../PrioritySelectDropdown/index";
 import SchedulePopper from "components/SchedulePopper";
-import moment from "moment";
-import {
-    useOnEnterKeyDown,
-    useOnEscapeKeyDown,
-    useStateCallback,
-} from "shared/utils/hooks";
+import { useOnEnterKeyDown, useStateCallback } from "shared/utils/hooks";
 import { formatDate } from "shared/utils/dateTime";
 function AddTaskInline({
     onSubmit = () => {},
@@ -31,6 +26,7 @@ function AddTaskInline({
     onCancel = () => {},
     isEdit = false,
     task = {},
+    parentId,
 }) {
     const [text, setText] = useStateCallback(isEdit ? task.text : "");
     const [priority, setPriority] = useState(isEdit ? task.priority : 0);
@@ -66,7 +62,17 @@ function AddTaskInline({
 
     const handleSubmitNewTask = (e) => {
         e && e.preventDefault();
-        dispatch(addTask({ text: text, priority: 0, date: date }));
+        if (parentId) {
+            dispatch(
+                addSubTask({
+                    task: { text: text, priority: 0, date: date },
+                    parentId: parentId,
+                })
+            );
+        } else {
+            dispatch(addTask({ text: text, priority: 0, date: date }));
+        }
+
         setText("");
         onSubmit(e);
     };

@@ -1,5 +1,4 @@
 import express from "express";
-import { tasks } from "./../data.js";
 import {
     getTasks,
     createTask,
@@ -14,6 +13,7 @@ const taskRouter = express.Router();
 
 taskRouter.get("/", getTasks);
 taskRouter.post("/", createTask);
+taskRouter.post("/:taskId/subtask", createTask);
 taskRouter.put("/updateOrder", updateOrder);
 taskRouter.put("/updateTask", updateTask);
 taskRouter.delete("/:id", deleteTask);

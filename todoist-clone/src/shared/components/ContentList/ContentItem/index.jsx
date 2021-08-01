@@ -16,12 +16,12 @@ import { Draggable } from "react-beautiful-dnd";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { addTask, deleteTask, updateTask } from "slices/tasksSlice";
-import AddTaskInline from "../../AddTaskInline";
+import AddTaskInline from "components/Project/AddTaskInline";
 import { useRouteMatch } from "react-router-dom";
 import { priorityColor } from "shared/utils/styles";
 import icons from "shared/utils/icons";
 import SchedulePopper from "components/SchedulePopper";
-import TaskContextMenu from "./../../TaskContextMenu/index";
+import TaskContextMenu from "components/Project/TaskContextMenu";
 import { formatDate } from "shared/utils/dateTime";
 function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const [isEditing, setIsEditing] = useState(false);

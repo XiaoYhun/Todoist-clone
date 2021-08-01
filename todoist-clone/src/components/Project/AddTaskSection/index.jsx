@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { AddTaskButton, AddTaskSectionWrapper, SectionHeader } from "./Styles";
 import icons from "shared/utils/icons";
 import AddTaskInline from "../AddTaskInline";
-function AddTaskSection(props) {
+function AddTaskSection({ placeHolder = "Add task", parentId }) {
     const [isEditing, setIsEditing] = useState(false);
 
     return (
@@ -12,11 +12,12 @@ function AddTaskSection(props) {
                 <AddTaskInline
                     onSubmit={() => setIsEditing(false)}
                     onCancel={() => setIsEditing(false)}
+                    parentId={parentId}
                 />
             ) : (
                 <AddTaskButton onClick={() => setIsEditing(true)}>
                     <span>{icons.add}</span>
-                    Add task
+                    {placeHolder}
                 </AddTaskButton>
             )}
         </AddTaskSectionWrapper>

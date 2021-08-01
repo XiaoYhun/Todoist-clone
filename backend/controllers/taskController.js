@@ -17,6 +17,13 @@ export const createTask = async (req, res) => {
         const newTask = new Task(task);
 
         await newTask.save();
+        if (req.params.taskId) {
+            Task.findById(req.params.taskId).then((task) => {
+                task.children.push(newTask._id);
+                task.save();
+            });
+        }
+
         res.status(201).json(newTask);
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -40,6 +47,10 @@ export const updateOrder = async (req, res) => {
 export const deleteTask = async (req, res) => {
     try {
         const a = await Task.deleteOne({ _id: req.params.id });
+        const b = await Task.updateOne(
+            { children: req.params.id },
+            { $pullAll: { children: [req.params.id] } }
+        );
         res.status(200).json("Delete done!");
     } catch (error) {}
 };

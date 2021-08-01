@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
     ProjectContentWrapper,
     ContentSection,
     SectionHeader,
-    ContentList,
     SectionHeaderActions,
 } from "./Styles";
-import ContentItem from "./ContentItem";
-import { Droppable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import {
@@ -17,6 +14,7 @@ import {
     updateTask,
 } from "slices/tasksSlice";
 import moment from "moment";
+import ContentList from "shared/components/ContentList";
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -76,48 +74,19 @@ function ProjectContent({ todayTasks, overdueTasks }) {
                         <h2>Overdue</h2>
                         <SectionHeaderActions>Reschedule</SectionHeaderActions>
                     </SectionHeader>
-                    <Droppable droppableId={"overdue"}>
-                        {(provided) => (
-                            <ContentList
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                style={{ marginBottom: "30px" }}
-                            >
-                                {overdueTasks.map((task) => (
-                                    <ContentItem
-                                        key={task._id}
-                                        task={task}
-                                        index={task.order}
-                                        editingId={editingId}
-                                        editRequest={handleEditRequest}
-                                    ></ContentItem>
-                                ))}
-                                {provided.placeholder}
-                            </ContentList>
-                        )}
-                    </Droppable>
+
+                    <ContentList
+                        droppableId={"overdue"}
+                        tasks={overdueTasks}
+                    ></ContentList>
+
                     <SectionHeader>
                         <h2>Today - {moment().format("ddd DD MMM")}</h2>
                     </SectionHeader>
-                    <Droppable droppableId={"today"}>
-                        {(provided) => (
-                            <ContentList
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                            >
-                                {todayTasks.map((task) => (
-                                    <ContentItem
-                                        key={task._id}
-                                        task={task}
-                                        index={task.order}
-                                        editingId={editingId}
-                                        editRequest={handleEditRequest}
-                                    ></ContentItem>
-                                ))}
-                                {provided.placeholder}
-                            </ContentList>
-                        )}
-                    </Droppable>
+                    <ContentList
+                        droppableId={"today"}
+                        tasks={todayTasks}
+                    ></ContentList>
                 </ContentSection>
                 {/* <ContentSection>
                 <SectionHeader></SectionHeader>

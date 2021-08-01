@@ -7,7 +7,6 @@ import {
     AddTaskForm,
     TaskExtraButtons,
     AddTaskInput,
-    PlaceHolder,
     ProjectButtons,
     ActionButtons,
     ProjectButton,
@@ -34,6 +33,7 @@ function AddTaskModal({ isOpen, ...props }) {
 
     const handleAddTask = () => {
         dispatch(addTask({ text: text, date: date, priority: priority }));
+
         setText("");
         setDate(moment().valueOf());
         setPriority(0);

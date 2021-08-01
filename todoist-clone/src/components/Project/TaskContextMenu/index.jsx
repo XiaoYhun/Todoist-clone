@@ -7,6 +7,7 @@ import icons from "shared/utils/icons";
 import { priorityColor } from "shared/utils/styles";
 import { useRouteMatch } from "react-router-dom";
 import moment from "moment";
+import { openConfirmModal } from "shared/components/ConfirmModal";
 
 const MenuWrapper = styled.ul`
     width: 250px;
@@ -287,7 +288,16 @@ function TaskContextMenu({
                         )}
                         <IconMenuItem
                             className="menu_item_delete"
-                            onClick={onDeleteClick}
+                            onClick={() => {
+                                setIsOpen(false);
+                                openConfirmModal({
+                                    data: {
+                                        title: "Delete",
+                                        text: `Are you sure to delete "<strong>${task.text}</strong>"?`,
+                                    },
+                                    onConfirm: onDeleteClick,
+                                });
+                            }}
                         >
                             <div className="icon_menu">{icons.trash}</div>
                             <div className="content_menu">Delete task</div>

@@ -24,10 +24,14 @@ const defaultProps = {
     isOpen: false,
     onClose: () => {},
     isGrow: false,
+    hasCloseButton: true,
 };
 
 const $root = document.getElementById("root");
-function Modal({ children, isOpen, onClose = () => {}, isGrow }, ref) {
+function Modal(
+    { className, children, isOpen, onClose = () => {}, isGrow, hasCloseButton },
+    ref
+) {
     const [stateIsOpen, setIsOpen] = useState(isOpen);
     useEffect(() => {
         setIsOpen(isOpen);
@@ -56,14 +60,17 @@ function Modal({ children, isOpen, onClose = () => {}, isGrow }, ref) {
                             <ModalContent
                                 isGrow={isGrow}
                                 onClick={(e) => e.stopPropagation()}
+                                className={className}
                             >
-                                <CloseIcon>
-                                    <Button
-                                        hasIcon
-                                        iconType="close"
-                                        onClick={handleClose}
-                                    ></Button>
-                                </CloseIcon>
+                                {hasCloseButton && (
+                                    <CloseIcon>
+                                        <Button
+                                            hasIcon
+                                            iconType="close"
+                                            onClick={handleClose}
+                                        ></Button>
+                                    </CloseIcon>
+                                )}
                                 {children}
                             </ModalContent>
                         </ModalOverlay>

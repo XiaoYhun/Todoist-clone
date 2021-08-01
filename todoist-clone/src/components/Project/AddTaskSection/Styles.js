@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import Button from "shared/components/Button";
 export const AddTaskSectionWrapper = styled.div`
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
     margin: 0 auto;
     flex: 1;
-    margin-top: 35px;
 `;
 export const SectionHeader = styled.header`
     border-bottom: 1px solid #f0f0f0;
@@ -30,6 +30,7 @@ export const AddTaskButton = styled.button`
     & span {
         color: red;
         margin-right: 11px;
+        height: 18px;
     }
     & span svg {
         border-radius: 50%;

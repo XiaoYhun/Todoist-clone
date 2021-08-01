@@ -62,6 +62,17 @@ export const addTask = createAsyncThunk(
         }
     }
 );
+export const addSubTask = createAsyncThunk(
+    "tasks/addSubTask",
+    async ({ task, parentId }, { rejectWithValue }) => {
+        try {
+            const res = await api.createSubTask(task, parentId);
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 
 export const updateTask = createAsyncThunk(
     "tasks/updateTask",
@@ -90,12 +101,53 @@ const taskSlice = createSlice({
         },
         [deleteTask.fulfilled]: (state, { payload }) => {
             tasksAdapter.removeOne(state, payload);
+            var parentTask = tasksAdapter
+                .getSelectors()
+                .selectAll(state)
+                .find(
+                    (task) => task.children && task.children.includes(payload)
+                );
+            parentTask &&
+                tasksAdapter.updateOne(state, {
+                    ...parentTask,
+                    children: [
+                        ...parentTask.children.filter(
+                            (item) => item !== payload
+                        ),
+                    ],
+                });
         },
         [addTask.fulfilled]: (state, { payload }) => {
             tasksAdapter.upsertOne(state, payload);
         },
+        [addSubTask.fulfilled]: (
+            state,
+            {
+                meta: {
+                    arg: { parentId },
+                },
+                payload,
+            }
+        ) => {
+            tasksAdapter.upsertOne(state, payload);
+            var parentTask = tasksAdapter
+                .getSelectors()
+                .selectById(state, parentId);
+
+            parentTask &&
+                tasksAdapter.upsertOne(state, {
+                    ...parentTask,
+                    children: [...parentTask.children, payload._id],
+                });
+        },
         [updateTask.pending]: (state, { meta: { arg } }) => {
             tasksAdapter.upsertOne(state, arg);
+            tasksAdapter
+                .getSelectors()
+                .selectAll()
+                .find((task) =>
+                    task.children.some((subtask) => subtask._id === arg._id)
+                );
         },
     },
 });
@@ -120,4 +172,9 @@ export const getTodayTasks = (state) => {
         if (date >= today) return true;
         return false;
     });
+};
+
+export const getSubTask = (state, ids) => {
+    const tasks = tasksAdapter.getSelectors().selectAll(state.tasks);
+    return tasks.filter((task) => ids.includes(task._id));
 };
