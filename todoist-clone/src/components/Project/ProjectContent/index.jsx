@@ -15,6 +15,7 @@ import {
 } from "slices/tasksSlice";
 import moment from "moment";
 import ContentList from "shared/components/ContentList";
+import AddTaskSection from "components/Project/AddTaskSection";
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -80,22 +81,13 @@ function ProjectContent({ todayTasks, overdueTasks }) {
                         tasks={overdueTasks}
                     ></ContentList>
 
-                    <SectionHeader>
+                    <SectionHeader style={{ marginTop: "20px" }}>
                         <h2>Today - {moment().format("ddd DD MMM")}</h2>
                     </SectionHeader>
-                    <ContentList
-                        droppableId={"today"}
-                        tasks={todayTasks}
-                    ></ContentList>
+                    <ContentList droppableId={"today"} tasks={todayTasks}>
+                        <AddTaskSection></AddTaskSection>
+                    </ContentList>
                 </ContentSection>
-                {/* <ContentSection>
-                <SectionHeader></SectionHeader>
-                <ContentList></ContentList>
-                </ContentSection>
-                <ContentSection>
-                <SectionHeader></SectionHeader>
-                <ContentList></ContentList>
-            </ContentSection> */}
             </ProjectContentWrapper>
         </DragDropContext>
     );

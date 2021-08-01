@@ -21,7 +21,6 @@ function Project(props) {
                 overdueTasks={overdueTasks}
                 todayTasks={todayTasks}
             ></ProjectContent>
-            <AddTaskSection />
             <Route
                 path={`${match.path}/task/:id`}
                 render={(routeProps) => {

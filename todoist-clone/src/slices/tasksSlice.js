@@ -2,7 +2,6 @@ import {
     createSlice,
     createAsyncThunk,
     createEntityAdapter,
-    createSelector,
 } from "@reduxjs/toolkit";
 import * as api from "shared/api";
 
@@ -142,12 +141,6 @@ const taskSlice = createSlice({
         },
         [updateTask.pending]: (state, { meta: { arg } }) => {
             tasksAdapter.upsertOne(state, arg);
-            tasksAdapter
-                .getSelectors()
-                .selectAll()
-                .find((task) =>
-                    task.children.some((subtask) => subtask._id === arg._id)
-                );
         },
     },
 });

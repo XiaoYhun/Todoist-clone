@@ -4,7 +4,7 @@ import { ContentListWrapper } from "./Styles";
 import ContentItem from "./ContentItem";
 import { Droppable } from "react-beautiful-dnd";
 
-function ContentList({ tasks, droppableId }) {
+function ContentList({ tasks, droppableId, children }) {
     const [editingId, setEditingId] = useState("");
 
     const handleEditRequest = (id) => {
@@ -28,6 +28,7 @@ function ContentList({ tasks, droppableId }) {
                             ></ContentItem>
                         ))}
                     {provided.placeholder}
+                    {children}
                 </ContentListWrapper>
             )}
         </Droppable>
