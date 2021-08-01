@@ -17,7 +17,7 @@ const CircleButton = styled(Button)`
     & svg {
         overflow: overlay;
         margin-top: -6px;
-        margin-left: -7px;
+        margin-left: -9px;
         opacity: 0;
         height: 16px;
         width: 16px;
