@@ -82,7 +82,6 @@ function ConfirmModal({
                 <CancelButton
                     onClick={() => {
                         onCancel();
-                        console.log($modal);
                         $modal.current.close();
                     }}
                 >

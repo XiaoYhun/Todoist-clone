@@ -14,11 +14,13 @@ function SelectDropdown({
     value: selectedValue = undefined,
     selectList = [],
     onChange = () => {},
+    isDropdown,
 }) {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <Popper
             isOpen={isOpen}
+            isDropdown={isDropdown}
             onOpen={() => {
                 setIsOpen(true);
             }}

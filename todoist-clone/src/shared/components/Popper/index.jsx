@@ -21,6 +21,7 @@ function Popper({
     onOpen = () => {},
     renderContent = () => {},
     disabled,
+    isDropdown,
 }) {
     const [stateIsOpen, setIsOpen] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -47,6 +48,10 @@ function Popper({
 
         if (isContextMenu) {
             pos = { x: contextMenuPos.x, y: contextMenuPos.y };
+        } else if (isDropdown) {
+            const parentRect = $linkRef.current.getBoundingClientRect();
+            pos.x = parentRect.left;
+            pos.y = parentRect.bottom;
         } else {
             const parentRect = $linkRef.current.getBoundingClientRect();
             pos.x =

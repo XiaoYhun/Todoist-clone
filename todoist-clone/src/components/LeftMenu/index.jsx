@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import {
     LeftMenuWrapper,
@@ -10,7 +11,9 @@ import {
 import ExpansionPanel from "./ExpansionPanel";
 import { projects } from "shared/utils/datadump";
 import icons from "shared/utils/icons";
+import { projectsSelectors } from "slices/projectsSlice";
 function LeftMenu(props) {
+    const projects = useSelector(projectsSelectors.selectAll);
     return (
         <LeftMenuWrapper>
             <TopFilters>
@@ -40,6 +43,7 @@ function LeftMenu(props) {
             <ExpansionPanel
                 title="Projects"
                 projects={projects}
+                addButton
             ></ExpansionPanel>
         </LeftMenuWrapper>
     );

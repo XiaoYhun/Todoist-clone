@@ -1,6 +1,7 @@
 import moment from "moment";
 
 export const formatDate = (date, format = "DD MMM") => {
+    if (!date) return null;
     switch (moment().startOf("day").diff(moment(date).startOf("day"), "days")) {
         case 0:
             return "Today";

@@ -4,7 +4,6 @@ import Navbar from "components/Navbar";
 import LeftMenu from "components/LeftMenu";
 import styled from "styled-components";
 import AddTaskModal from "components/AddTaskModal";
-import TaskDetailModal from "components/TaskDetailModal";
 const AppWrapper = styled.div`
     /* padding-left: 340px; */
     /* padding-top: 45px; */
@@ -38,7 +37,6 @@ export default function App() {
                 isOpen={isOpenAddModal}
                 onClose={() => setIsOpenAddModal(false)}
             />
-            <TaskDetailModal />
         </AppWrapper>
     );
 }

@@ -112,7 +112,6 @@ export const TaskOverviewFooter = styled.div`
 `;
 
 export const DateDueButton = styled(Button)`
-    color: red;
     transition-property: box-shadow, border;
     transition-duration: 0.3s;
     transition-timing-function: ease;

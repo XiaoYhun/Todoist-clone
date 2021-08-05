@@ -30,7 +30,7 @@ function AddTaskInline({
 }) {
     const [text, setText] = useStateCallback(isEdit ? task.text : "");
     const [priority, setPriority] = useState(isEdit ? task.priority : 0);
-    const [date, setDate] = useState(isEdit ? task.date : Date.now());
+    const [date, setDate] = useState(isEdit ? task.date : null);
     const dispatch = useDispatch();
     const isSaving = useRef(false);
     useEffect(() => {
@@ -127,7 +127,7 @@ function AddTaskInline({
                                 iconType="calendar"
                                 id="today"
                             >
-                                {formatDate(+date)}
+                                {date ? formatDate(+date) : "Schedule"}
                             </ProjectButton>
                         </SchedulePopper>
                         <ProjectButton hasIcon iconType="inbox">

@@ -13,3 +13,15 @@ export const zIndexValues = {
     popper: 999,
     navbar: 900,
 };
+
+export const projectColors = [
+    { name: "Charcoal", value: "#808080" },
+    { name: "Berry Red", value: "#b8255f" },
+    { name: "Red", value: "#db4035" },
+    { name: "Orange", value: "#ff9933" },
+    { name: "Yellow", value: "#fad000" },
+    { name: "Olive Green", value: "#afb83b" },
+    { name: "Lime Green", value: "#7ecc49" },
+    { name: "Green", value: "#299438" },
+    { name: "Sky Blue", value: "#14aaf5" },
+];

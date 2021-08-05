@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import taskRouter from "./routers/taskRouter.js";
+import projectRouter from "./routers/projectRouter.js";
 import Task from "./models/taskModel.js";
 import cors from "cors";
 const app = express();
@@ -26,3 +27,4 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/tasks", taskRouter);
+app.use("/api/projects", projectRouter);

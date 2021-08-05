@@ -128,14 +128,17 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                                                     : ""
                                                             }
                                                         >
-                                                            <span>
-                                                                {
-                                                                    icons.calendarSmall
-                                                                }
-                                                                {formatDate(
-                                                                    +task.date
-                                                                )}
-                                                            </span>
+                                                            {task.date !==
+                                                                null && (
+                                                                <span>
+                                                                    {
+                                                                        icons.calendarSmall
+                                                                    }
+                                                                    {formatDate(
+                                                                        +task.date
+                                                                    )}
+                                                                </span>
+                                                            )}
                                                         </Button>
                                                     </SchedulePopper>
                                                     <ProjectLink>

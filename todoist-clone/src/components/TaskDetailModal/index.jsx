@@ -91,8 +91,11 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
                                     disabled={isDone}
                                 >
                                     <DateDueButton hasIcon iconType="calendar">
-                                        {task &&
-                                            moment(+task.date).format("DD MMM")}
+                                        {task && task.date
+                                            ? moment(+task.date).format(
+                                                  "DD MMM"
+                                              )
+                                            : "Schedule"}
                                     </DateDueButton>
                                 </SchedulePopper>
                             </TaskOverviewSub>
