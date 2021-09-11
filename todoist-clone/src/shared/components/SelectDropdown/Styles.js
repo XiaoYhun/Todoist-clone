@@ -46,3 +46,23 @@ export const ItemCheckMark = styled.span`
         height: 14px;
     }
 `;
+
+export const ListWrapper = styled.div`
+    max-height: 300px;
+    overflow-x: hidden;
+`;
+export const FilterInput = styled.div`
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    padding: 4px 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    input {
+        line-height: 24px;
+        border: none;
+        outline: none;
+        flex: 1;
+    }
+`;

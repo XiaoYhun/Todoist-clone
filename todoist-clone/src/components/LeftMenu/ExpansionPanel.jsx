@@ -4,6 +4,8 @@ import styled from "styled-components";
 import icons from "shared/utils/icons";
 import AddProjectModal from "components/AddProjectModal";
 import Button from "shared/components/Button";
+import { Link, useRouteMatch } from "react-router-dom";
+
 const ExpandButton = styled(Button)`
     &:hover {
         background: transparent;
@@ -56,26 +58,18 @@ const Title = styled.div`
     font-size: 14px;
     flex: 1;
 `;
+const ProjectLink = styled(Link)``;
 
 const CollapseWrapper = styled.div`
     min-height: 0px;
     max-height: ${(props) => (props.expanded ? "500px" : "0")};
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     display: flex;
+    flex-direction: column;
     overflow: hidden;
+    margin-right: 5px;
 
-    & ul {
-        padding: 0;
-        margin: 0;
-        flex: 1;
-    }
-
-    & ul li {
-        list-style: none;
-        display: flex;
-    }
-
-    & ul li > div {
+    ${ProjectLink} {
         border-radius: 5px;
         display: flex;
         align-items: center;
@@ -85,7 +79,7 @@ const CollapseWrapper = styled.div`
         transition-duration: 220ms;
         padding: 5px 12px 5px 7px;
         margin-right: 5px;
-
+        box-sizing: border-box;
         &:hover {
             background-color: #e9e9e9;
         }
@@ -147,21 +141,13 @@ function ExpansionPanel({ title, projects, addButton }) {
                 )}
             </Header>
             <CollapseWrapper expanded={expanded}>
-                <ul>
-                    {projects &&
-                        projects.map((project, index) => (
-                            <li key={project._id}>
-                                <div>
-                                    <ColoredDot
-                                        color={project.color}
-                                    ></ColoredDot>
-                                    <span className="projectName">
-                                        {project.name}
-                                    </span>
-                                </div>
-                            </li>
-                        ))}
-                </ul>
+                {projects &&
+                    projects.map((project, index) => (
+                        <ProjectLink to={`/project/${project._id}`}>
+                            <ColoredDot color={project.color}></ColoredDot>
+                            <span className="projectName">{project.name}</span>
+                        </ProjectLink>
+                    ))}
             </CollapseWrapper>
         </ExpansionPanelWrapper>
     );

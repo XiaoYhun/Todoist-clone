@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ProjectWrapper } from "./Styles";
 import Header from "./Header";
 import ProjectContent from "./ProjectContent";
 import AddTaskSection from "./AddTaskSection";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getOverdueTasks, getTodayTasks } from "slices/tasksSlice";
+import { projectsSelectors } from "slices/projectsSlice";
 import { Route, useRouteMatch, useHistory } from "react-router-dom";
 import TaskDetailModal from "components/TaskDetailModal";
 import AddProjectModal from "components/AddProjectModal";
@@ -14,14 +15,22 @@ function Project(props) {
 
     const match = useRouteMatch();
     const history = useHistory();
+    const isToday = !match.params.projectId;
+    const project = useSelector((state) =>
+        projectsSelectors.selectById(state, match.params.projectId)
+    );
 
     return (
         <ProjectWrapper>
-            <Header></Header> {/* Done */}
+            <Header project={project}></Header>
+
             <ProjectContent
+                project={project}
+                isToday={isToday}
                 overdueTasks={overdueTasks}
                 todayTasks={todayTasks}
             ></ProjectContent>
+
             <Route
                 path={`${match.path}/task/:id`}
                 render={(routeProps) => {

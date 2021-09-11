@@ -27,10 +27,11 @@ function AddTaskInline({
     isEdit = false,
     task = {},
     parentId,
+    project,
 }) {
     const [text, setText] = useStateCallback(isEdit ? task.text : "");
     const [priority, setPriority] = useState(isEdit ? task.priority : 0);
-    const [date, setDate] = useState(isEdit ? task.date : null);
+    const [date, setDate] = useState(isEdit ? task.date : +new Date());
     const dispatch = useDispatch();
     const isSaving = useRef(false);
     useEffect(() => {
@@ -70,7 +71,14 @@ function AddTaskInline({
                 })
             );
         } else {
-            dispatch(addTask({ text: text, priority: 0, date: date }));
+            dispatch(
+                addTask({
+                    text: text,
+                    priority: 0,
+                    date: date,
+                    project: project ? project._id : null,
+                })
+            );
         }
 
         setText("");
@@ -95,6 +103,9 @@ function AddTaskInline({
     const handleDatePick = (value) => {
         setDate(value);
     };
+    const handleCancel = () => {
+        onCancel();
+    };
 
     useOnEnterKeyDown();
 
@@ -102,6 +113,10 @@ function AddTaskInline({
         if (e.keyCode === 13) {
             setText(e.target.innerText);
             isSaving.current = true;
+            isEdit ? handleSaveTask() : handleSubmitNewTask();
+        }
+        if (e.keyCode === 27) {
+            handleCancel();
         }
     };
     return (
@@ -130,8 +145,12 @@ function AddTaskInline({
                                 {date ? formatDate(+date) : "Schedule"}
                             </ProjectButton>
                         </SchedulePopper>
-                        <ProjectButton hasIcon iconType="inbox">
-                            Inbox
+                        <ProjectButton
+                            hasIcon
+                            iconType={project ? "dot" : "inbox"}
+                            fillColor={project ? project.color : null}
+                        >
+                            {project ? project.name : "Inbox"}
                         </ProjectButton>
                     </ProjectButtons>
                     <ActionButtons>
@@ -163,14 +182,7 @@ function AddTaskInline({
                         Add task
                     </AddButton>
                 )}
-                <CancelButton
-                    onClick={() => {
-                        setText("");
-                        onCancel();
-                    }}
-                >
-                    Cancel
-                </CancelButton>
+                <CancelButton onClick={handleCancel}>Cancel</CancelButton>
             </SubmitButtons>
         </AddTaskForm>
     );

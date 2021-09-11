@@ -53,6 +53,10 @@ export const ProjectButton = styled(Button)`
     &#today {
         color: green;
     }
+    svg {
+        height: 16px;
+        width: 16px;
+    }
 `;
 
 export const ActionButtons = styled.div`

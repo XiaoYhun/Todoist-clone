@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter } from "react-router-dom";
 import Routes from "./Routes";
 import Navbar from "components/Navbar";
 import LeftMenu from "components/LeftMenu";
@@ -28,15 +29,17 @@ export default function App() {
 
     return (
         <AppWrapper>
-            <Navbar onAddClick={handleAddClick} />
-            <MainWrapper>
-                <LeftMenu />
-                <Routes />
-            </MainWrapper>
-            <AddTaskModal
-                isOpen={isOpenAddModal}
-                onClose={() => setIsOpenAddModal(false)}
-            />
+            <BrowserRouter>
+                <Navbar onAddClick={handleAddClick} />
+                <MainWrapper>
+                    <LeftMenu />
+                    <Routes />
+                </MainWrapper>
+                <AddTaskModal
+                    isOpen={isOpenAddModal}
+                    onClose={() => setIsOpenAddModal(false)}
+                />
+            </BrowserRouter>
         </AppWrapper>
     );
 }

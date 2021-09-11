@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import ContentList from "shared/components/ContentList";
 import { DragDropContext } from "react-beautiful-dnd";
 import AddTaskSection from "components/Project/AddTaskSection";
-import { getSubTask } from "slices/tasksSlice";
+import { getTasksByIds } from "slices/tasksSlice";
 
 const TaskTabsWrapper = styled.div`
     flex-grow: 0;
@@ -59,7 +59,9 @@ const tabs = [
 ];
 function TaskTabs({ task = {} }) {
     const [selectedTab, setSelectedTab] = useState("subtask");
-    const subTasks = useSelector((state) => getSubTask(state, task.children));
+    const subTasks = useSelector((state) =>
+        getTasksByIds(state, task.children)
+    );
     const tabClickHandle = (e) => {
         e.preventDefault();
         setSelectedTab(e.target.id);

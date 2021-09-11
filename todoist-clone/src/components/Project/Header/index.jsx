@@ -4,14 +4,21 @@ import { HeaderWrapper, HeaderContent } from "./Styles";
 
 import Button from "shared/components/Button";
 
-function Header(props) {
+function Header({ project }) {
+    const isToday = !project;
     return (
         <HeaderWrapper>
             <HeaderContent>
-                <h1>
-                    <span>Today</span>
-                    <small>Sun 27 Jun</small>
-                </h1>
+                {isToday ? (
+                    <h1>
+                        <span>Today</span>
+                        <small>Sun 27 Jun</small>
+                    </h1>
+                ) : (
+                    <h1>
+                        <span>{project.name}</span>
+                    </h1>
+                )}
                 <div>
                     <Button hasIcon iconType="sort" tooltip="Sort">
                         Sort

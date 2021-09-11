@@ -58,9 +58,11 @@ export const ProjectLink = styled.span`
     margin-right: -15px;
     font-size: 12px;
     color: grey;
-
+    border-radius: 3px;
+    padding: 0 5px;
     &:hover {
         color: black;
+        background-color: #eee;
     }
 `;
 
@@ -90,5 +92,18 @@ export const ContentItemWrapper = styled.li`
     &.done ${ContentText} {
         color: grey;
         text-decoration: line-through;
+    }
+`;
+export const ProjectIcon = styled.span`
+    svg {
+        height: 18px;
+        width: 18px;
+        path {
+            ${(props) =>
+                props.color &&
+                css`
+                    fill: ${props.color};
+                `}
+        }
     }
 `;

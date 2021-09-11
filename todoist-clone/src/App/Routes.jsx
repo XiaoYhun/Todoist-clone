@@ -1,14 +1,13 @@
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import React from "react";
 import Project from "components/Project";
 const Routes = () => {
     return (
-        <BrowserRouter>
-            <Switch>
-                <Redirect from="/" exact to="/project" />
-                <Route path="/project" component={Project} />
-            </Switch>
-        </BrowserRouter>
+        <Switch>
+            <Redirect from="/" exact to="/today" />
+            <Route path="/today" component={Project} />
+            <Route path="/project/:projectId" component={Project} />
+        </Switch>
     );
 };
 export default Routes;

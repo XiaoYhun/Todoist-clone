@@ -38,6 +38,7 @@ function ItemActionButtons({
     task,
     onUpdate,
     onDuplicateClick,
+    onProjectClick,
 }) {
     const handleDayClick = (timestamp) => {
         onUpdate({ ...task, date: timestamp });
@@ -77,6 +78,7 @@ function ItemActionButtons({
                 onEditClick={onEditClick}
                 onScheduleClick={handleDayClick}
                 onDuplicateClick={onDuplicateClick}
+                onProjectClick={onProjectClick}
             >
                 <ActionButton hasIcon iconType="more" tooltip="More" />
             </TaskContextMenu>

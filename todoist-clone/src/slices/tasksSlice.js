@@ -153,7 +153,7 @@ export const getOverdueTasks = (state) => {
     return tasks.filter((task) => {
         const date = new Date(+task.date);
         const today = new Date().setHours(0, 0, 0, 0);
-        if (date < today) return true;
+        if (task.date && date < today) return true;
         return false;
     });
 };
@@ -162,12 +162,12 @@ export const getTodayTasks = (state) => {
     return tasks.filter((task) => {
         const date = new Date(+task.date).setHours(0, 0, 0, 0);
         const today = new Date().setHours(0, 0, 0, 0);
-        if (date >= today) return true;
+        if (task.date && date >= today) return true;
         return false;
     });
 };
 
-export const getSubTask = (state, ids) => {
+export const getTasksByIds = (state, ids) => {
     const tasks = tasksAdapter.getSelectors().selectAll(state.tasks);
     return tasks.filter((task) => ids.includes(task._id));
 };

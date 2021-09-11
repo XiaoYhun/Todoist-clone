@@ -7,14 +7,22 @@ import {
     SearchInput,
 } from "./Styles";
 import NavButton from "./NavButton";
+import { useHistory } from "react-router-dom";
 
-export default function AppNavbar({ onAddClick }) {
+function AppNavbar({ onAddClick }) {
+    const history = useHistory();
     return (
         <Navbar>
             <NavbarInner>
                 <LeftNavbar>
                     <NavButton icon="menu" />
-                    <NavButton icon="home" />
+                    <NavButton
+                        icon="home"
+                        onClick={() =>
+                            history.location.pathname !== "/today" &&
+                            history.push("/today")
+                        }
+                    />
                     <SearchInput
                         className=""
                         hasIcon
@@ -38,3 +46,5 @@ export default function AppNavbar({ onAddClick }) {
         </Navbar>
     );
 }
+
+export default AppNavbar;

@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import Button from "shared/components/Button";
+import { Link } from "react-router-dom";
 export const TaskDetailModalWrapper = styled.section`
     display: flex;
     flex-direction: column;
@@ -14,7 +15,7 @@ export const TaskDetailModalWrapper = styled.section`
 export const DetailHeader = styled.div`
     padding-bottom: 5px;
 `;
-export const ProjectLink = styled.div`
+export const ProjectLink = styled(Link)`
     display: flex;
     flex-direction: row;
     padding: 2px 4px 2px 2px;
@@ -22,8 +23,20 @@ export const ProjectLink = styled.div`
 `;
 export const ProjectIcon = styled.div`
     margin-right: 10px;
-    margin-left: 2px;
     color: grey;
+    display: flex;
+    align-items: center;
+    svg {
+        height: 18px;
+        width: 18px;
+        path {
+            ${(props) =>
+                props.color &&
+                css`
+                    fill: ${props.color};
+                `}
+        }
+    }
 `;
 export const ProjectName = styled.div`
     font-size: 13px;

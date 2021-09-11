@@ -20,6 +20,7 @@ import TaskTabs from "./TaskTabs";
 import Modal from "shared/components/Modal";
 import icons from "shared/utils/icons";
 import { tasksSelectors } from "slices/tasksSlice";
+import { projectsSelectors } from "slices/projectsSlice";
 import moment from "moment";
 import AddTaskInline from "../Project/AddTaskInline";
 import { priorityColor } from "shared/utils/styles";
@@ -30,6 +31,9 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
     const [isEditing, setIsEditing] = useState(false);
     const task = useSelector((state) =>
         tasksSelectors.selectById(state, taskId)
+    );
+    const project = useSelector(
+        (state) => task && projectsSelectors.selectById(state, task.project)
     );
     const dispatch = useDispatch();
     const isDone = task && task.done;
@@ -44,6 +48,7 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
     const handleUpdateDate = (date) => {
         handleUpdateTask({ ...task, date: date });
     };
+
     const handleDoneClick = () => {
         handleUpdateTask({ ...task, done: !task.done });
     };
@@ -51,9 +56,13 @@ function TaskDetailModal({ isOpen, onClose = () => {}, taskId }) {
         <Modal isOpen={isOpen} onClose={onClose} isGrow>
             <TaskDetailModalWrapper>
                 <DetailHeader>
-                    <ProjectLink>
-                        <ProjectIcon>{icons.inbox}</ProjectIcon>
-                        <ProjectName>Inbox</ProjectName>
+                    <ProjectLink to={`/project/${task.project}`}>
+                        <ProjectIcon color={project ? project.color : null}>
+                            {project ? icons.dot : icons.inbox}
+                        </ProjectIcon>
+                        <ProjectName>
+                            {project ? project.name : "Inbox"}
+                        </ProjectName>
                     </ProjectLink>
                 </DetailHeader>
                 {isEditing && !isDone ? (

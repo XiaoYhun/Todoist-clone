@@ -2,6 +2,7 @@ import {
     createEntityAdapter,
     createAsyncThunk,
     createSlice,
+    current,
 } from "@reduxjs/toolkit";
 import * as api from "shared/api";
 const projectsAdapter = createEntityAdapter({ selectId: (model) => model._id });
@@ -43,6 +44,48 @@ const projectsSlice = createSlice({
         [addProject.fulfilled]: (state, action) => {
             projectsAdapter.upsertOne(state, action.payload);
         },
+        "tasks/addTask/fulfilled": (state, { payload }) => {
+            let project = projectsAdapter
+                .getSelectors()
+                .selectById(state, payload.project);
+            projectsAdapter.updateOne(state, {
+                id: project._id,
+                changes: {
+                    ...project,
+                    tasks: [...project.tasks, payload._id],
+                },
+            });
+        },
+        "tasks/updateTask/pending": (state, { meta: { arg } }) => {
+            let project = projectsAdapter
+                .getSelectors()
+                .selectAll(state)
+                .filter((p) => p.tasks.includes(arg._id))[0];
+            if (project && project._id !== arg.project) {
+                projectsAdapter.updateOne(state, {
+                    id: project._id,
+                    changes: {
+                        tasks: project.tasks.filter((t) => t !== arg._id),
+                    },
+                });
+                let newProject = projectsAdapter
+                    .getSelectors()
+                    .selectById(state, arg.project);
+                projectsAdapter.updateOne(state, {
+                    id: arg.project,
+                    changes: { tasks: [...newProject.tasks, arg._id] },
+                });
+            }
+            if (!project && arg.project) {
+                let newProject = projectsAdapter
+                    .getSelectors()
+                    .selectById(state, arg.project);
+                projectsAdapter.updateOne(state, {
+                    id: arg.project,
+                    changes: { tasks: [...newProject.tasks, arg._id] },
+                });
+            }
+        },
     },
 });
 
@@ -50,3 +93,8 @@ export default projectsSlice.reducer;
 export const projectsSelectors = projectsAdapter.getSelectors(
     (state) => state.projects
 );
+
+export const getProject = (state, id) => {
+    const project = projectsSelectors.selectById(state, id);
+    return project;
+};

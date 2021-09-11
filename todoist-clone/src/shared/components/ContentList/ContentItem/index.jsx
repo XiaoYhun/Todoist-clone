@@ -8,13 +8,14 @@ import {
     DragButton,
     ProjectLink,
     DragContainer,
+    ProjectIcon,
 } from "./Styles";
 import ColoredCircleButton from "./ColoredCircleButton";
 import Button from "shared/components/Button";
 import ItemActionButtons from "./ItemActionButtons";
 import { Draggable } from "react-beautiful-dnd";
 import moment from "moment";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTask, deleteTask, updateTask } from "slices/tasksSlice";
 import AddTaskInline from "components/Project/AddTaskInline";
 import { useRouteMatch } from "react-router-dom";
@@ -23,9 +24,12 @@ import icons from "shared/utils/icons";
 import SchedulePopper from "components/SchedulePopper";
 import TaskContextMenu from "components/Project/TaskContextMenu";
 import { formatDate } from "shared/utils/dateTime";
+import { projectsSelectors } from "slices/projectsSlice";
 function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const [isEditing, setIsEditing] = useState(false);
-
+    const project = useSelector((state) =>
+        projectsSelectors.selectById(state, task.project)
+    );
     const dispatch = useDispatch();
     const match = useRouteMatch();
 
@@ -57,6 +61,9 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
     const handleDuplicateClick = () => {
         dispatch(addTask({ ...task, _id: undefined }));
     };
+    const handleProjectClick = (value) => {
+        handleUpdateTask({ ...task, project: value });
+    };
 
     return (
         <>
@@ -66,6 +73,7 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                     task={task}
                     onCancel={() => setIsEditing(false)}
                     onSave={() => setIsEditing(false)}
+                    project={project}
                 />
             ) : (
                 <Draggable draggableId={task._id} index={index}>
@@ -105,12 +113,17 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                             onDuplicateClick={
                                                 handleDuplicateClick
                                             }
+                                            onProjectClick={handleProjectClick}
                                             task={task}
                                             disabled={task.done}
                                         >
                                             <>
                                                 <ContentText
-                                                    to={`${match.url}/task/${task._id}`}
+                                                    to={`${
+                                                        match.url.split(
+                                                            "/task/"
+                                                        )[0]
+                                                    }/task/${task._id}`}
                                                 >
                                                     {task.text}
                                                 </ContentText>
@@ -142,7 +155,20 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                                         </Button>
                                                     </SchedulePopper>
                                                     <ProjectLink>
-                                                        Inbox
+                                                        {project
+                                                            ? project.name
+                                                            : "Inbox"}
+                                                        <ProjectIcon
+                                                            color={
+                                                                project
+                                                                    ? project.color
+                                                                    : "cornflowerblue"
+                                                            }
+                                                        >
+                                                            {project
+                                                                ? icons.dot
+                                                                : icons.inbox}
+                                                        </ProjectIcon>
                                                     </ProjectLink>
                                                 </ContentTags>
                                             </>
@@ -155,6 +181,7 @@ function ContentItem({ task, index, editingId, editRequest = () => {} }) {
                                         onEditClick={handleEditClick}
                                         onUpdate={handleUpdateTask}
                                         onDuplicateClick={handleDuplicateClick}
+                                        onProjectClick={handleProjectClick}
                                         task={task}
                                     ></ItemActionButtons>
                                 </ContentItemWrapper>

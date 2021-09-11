@@ -12,8 +12,10 @@ import ExpansionPanel from "./ExpansionPanel";
 import { projects } from "shared/utils/datadump";
 import icons from "shared/utils/icons";
 import { projectsSelectors } from "slices/projectsSlice";
+import { useHistory } from "react-router-dom";
 function LeftMenu(props) {
     const projects = useSelector(projectsSelectors.selectAll);
+    const history = useHistory();
     return (
         <LeftMenuWrapper>
             <TopFilters>
@@ -23,7 +25,7 @@ function LeftMenu(props) {
                         Inbox<small>30</small>
                     </FilterName>
                 </Filter>
-                <Filter>
+                <Filter onClick={() => history.push("/today")}>
                     <FilterIcon color={"#058527"}>{icons.today}</FilterIcon>
                     <FilterName>
                         Today<small>30</small>

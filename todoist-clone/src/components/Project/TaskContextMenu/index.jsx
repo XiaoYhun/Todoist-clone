@@ -8,7 +8,8 @@ import { priorityColor } from "shared/utils/styles";
 import { useRouteMatch } from "react-router-dom";
 import moment from "moment";
 import { openConfirmModal } from "shared/components/ConfirmModal";
-
+import ProjectSelectDropdown from "components/ProjectSelectDropdown";
+import { Link } from "react-router-dom";
 const MenuWrapper = styled.ul`
     width: 250px;
     font-size: 13px;
@@ -92,13 +93,13 @@ function TaskContextMenu({
     onEditClick = () => {},
     onScheduleClick = () => {},
     onDuplicateClick = () => {},
+    onProjectClick = () => {},
     isContextMenu,
     task = {},
     disabled,
     onUpdate = () => {},
 }) {
     const [stateIsOpen, setIsOpen] = useState(false);
-    const match = useRouteMatch();
 
     const handlePriorityClick = (priority) => {
         onUpdate({ ...task, priority: priority });
@@ -143,9 +144,16 @@ function TaskContextMenu({
                                     <div className="icon_menu">
                                         {icons.list}
                                     </div>
-                                    <div className="content_menu">
+                                    <Link
+                                        className="content_menu"
+                                        to={
+                                            task.project
+                                                ? `/project/${task.project}`
+                                                : "/inbox"
+                                        }
+                                    >
                                         Go to project
-                                    </div>
+                                    </Link>
                                 </IconMenuItem>
                                 <MenuSeparator />
                                 <SectionMenuItem>
@@ -249,14 +257,23 @@ function TaskContextMenu({
                                     </div>
                                 </IconMenuItem>
                                 <MenuSeparator />
-                                <IconMenuItem>
-                                    <div className="icon_menu">
-                                        {icons.moveTo}
-                                    </div>
-                                    <div className="content_menu">
-                                        Move to project
-                                    </div>
-                                </IconMenuItem>
+                                <ProjectSelectDropdown
+                                    onChange={(value) => {
+                                        setIsOpen(false);
+                                        onProjectClick(value);
+                                    }}
+                                    filterInputPlaceholder={"Type a project"}
+                                >
+                                    <IconMenuItem>
+                                        <div className="icon_menu">
+                                            {icons.moveTo}
+                                        </div>
+                                        <div className="content_menu">
+                                            Move to project
+                                        </div>
+                                    </IconMenuItem>
+                                </ProjectSelectDropdown>
+
                                 <IconMenuItem
                                     onClick={() => {
                                         setIsOpen(false);
