@@ -53,7 +53,9 @@ export const updateOrder = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
     try {
-        await Task.deleteOne({ _id: req.params.id });
+        let task = await Task.findOne({ _id: req.params.id });
+        Task.deleteMany({ _id: { $in: task.children } });
+        Task.deleteOne({ _id: req.params.id });
         Task.findOne({ children: req.params.id }).then((task) => {
             if (task) {
                 task.children.remove(req.params.id);
@@ -91,7 +93,7 @@ export const updateTask = async (req, res) => {
         if (typeof task.done !== "undefined") {
             oldTask.done = task.done;
         }
-        if (!oldTask.project.equals(task.project)) {
+        if (oldTask.project && !oldTask.project.equals(task.project)) {
             const project = await Project.findById(task.project);
             if (project) {
                 Project.findOne({ _id: oldTask.project }).then((p) => {

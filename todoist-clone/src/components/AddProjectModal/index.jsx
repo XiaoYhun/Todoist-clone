@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -11,23 +11,26 @@ import {
     ConfirmButton,
 } from "./Styles";
 import Modal from "shared/components/Modal";
-import { projectColors } from "shared/utils/styles";
 import ColorSelect from "./ColorSelect";
-import { addProject } from "slices/projectsSlice";
+import { addProject, updateProject } from "slices/projectsSlice";
 
-function AddProjectModal({ isOpen, onClose }) {
-    const [name, setName] = useState("");
-    const [color, setColor] = useState(undefined);
+function AddProjectModal({ isOpen, onClose, project }) {
+    const [name, setName] = useState(project ? project.name : "");
+    const [color, setColor] = useState(project ? project.color : undefined);
     const dispatch = useDispatch();
     const $modal = useRef();
 
-    const onCancel = () => {
-        setName("");
-        setColor(undefined);
-    };
     const onConfirm = () => {
-        dispatch(addProject({ name: name, color: color }));
+        if (project) {
+            dispatch(updateProject({ ...project, name: name, color: color }));
+        } else {
+            dispatch(addProject({ name: name, color: color }));
+        }
     };
+    useEffect(() => {
+        setName(project ? project.name : "");
+        setColor(project ? project.color : undefined);
+    }, [project]);
 
     return (
         <Modal isOpen={isOpen} ref={$modal} onClose={onClose}>
@@ -51,7 +54,6 @@ function AddProjectModal({ isOpen, onClose }) {
                 <ConfirmAction>
                     <CancelButton
                         onClick={() => {
-                            onCancel();
                             $modal.current.close();
                         }}
                     >
@@ -63,7 +65,7 @@ function AddProjectModal({ isOpen, onClose }) {
                             $modal.current.close();
                         }}
                     >
-                        Add
+                        {project ? "Save" : "Add"}
                     </ConfirmButton>
                 </ConfirmAction>
             </AddProjectModalWrapper>

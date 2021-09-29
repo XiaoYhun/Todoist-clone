@@ -2,6 +2,7 @@ import express from "express";
 import {
     getProjects,
     createProject,
+    updateProject,
 } from "../controllers/projectController.js";
 import Project from "../models/projectModel.js";
 const projectRouter = express.Router();
@@ -10,6 +11,7 @@ const projectRouter = express.Router();
 
 projectRouter.get("/", getProjects);
 projectRouter.post("/", createProject);
+projectRouter.put("/", updateProject);
 
 projectRouter.param("project", (req, res, next, id) => {
     Project.findOne({ _id: id })

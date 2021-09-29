@@ -14,3 +14,5 @@ export const deleteTask = (taskId) => axios.delete(`${taskUrl}/${taskId}`);
 const projectUrl = `${baseOrigin}/projects`;
 export const getProjects = () => axios.get(projectUrl);
 export const addProject = (projectData) => axios.post(projectUrl, projectData);
+export const updateProject = (projectData) =>
+    axios.put(projectUrl, projectData);

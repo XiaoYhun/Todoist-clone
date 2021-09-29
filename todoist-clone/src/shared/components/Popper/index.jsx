@@ -119,7 +119,7 @@ function Popper({
             {React.isValidElement(children) &&
                 React.cloneElement(children, {
                     onClick: () => {
-                        if (!disabled) {
+                        if (!disabled && !isContextMenu) {
                             setIsOpen(true);
                             isControlled && onOpen();
                         }

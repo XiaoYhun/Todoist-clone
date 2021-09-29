@@ -5,7 +5,7 @@ import icons from "shared/utils/icons";
 import AddProjectModal from "components/AddProjectModal";
 import Button from "shared/components/Button";
 import { Link, useRouteMatch } from "react-router-dom";
-
+import ProjectContextMenu from "./ProjectContextMenu";
 const ExpandButton = styled(Button)`
     &:hover {
         background: transparent;
@@ -107,12 +107,17 @@ const ColoredDot = styled(({ className }) => (
 function ExpansionPanel({ title, projects, addButton }) {
     const [expanded, setExpanded] = useState(false);
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
-    const handleClick = (e) => {
+    const [projectEdit, setProject] = useState(null);
+    const handleExpandClick = (e) => {
         e.preventDefault();
         setExpanded(!expanded);
     };
     const handleAddClick = (e) => {
         e.preventDefault();
+        setIsOpenAddModal((isOpenAddModal) => !isOpenAddModal);
+    };
+    const handleEditClick = (project) => {
+        setProject((p) => project);
         setIsOpenAddModal((isOpenAddModal) => !isOpenAddModal);
     };
     return (
@@ -122,9 +127,9 @@ function ExpansionPanel({ title, projects, addButton }) {
                     hasIcon
                     iconType="toggle"
                     expanded={expanded}
-                    onClick={handleClick}
+                    onClick={handleExpandClick}
                 ></ExpandButton>
-                <Title onClick={handleClick}>{title}</Title>
+                <Title onClick={handleExpandClick}>{title}</Title>
                 {addButton && (
                     <>
                         <AddButton
@@ -135,7 +140,11 @@ function ExpansionPanel({ title, projects, addButton }) {
                         />
                         <AddProjectModal
                             isOpen={isOpenAddModal}
-                            onClose={() => setIsOpenAddModal(false)}
+                            onClose={() => {
+                                setIsOpenAddModal(false);
+                                setProject(null);
+                            }}
+                            project={projectEdit}
                         ></AddProjectModal>
                     </>
                 )}
@@ -143,10 +152,20 @@ function ExpansionPanel({ title, projects, addButton }) {
             <CollapseWrapper expanded={expanded}>
                 {projects &&
                     projects.map((project, index) => (
-                        <ProjectLink to={`/project/${project._id}`}>
-                            <ColoredDot color={project.color}></ColoredDot>
-                            <span className="projectName">{project.name}</span>
-                        </ProjectLink>
+                        <ProjectContextMenu
+                            project={project}
+                            isContextMenu
+                            onEditClick={() => handleEditClick(project)}
+                            onFavoritesClick={() => {}}
+                            onDeleteClick={() => {}}
+                        >
+                            <ProjectLink to={`/project/${project._id}`}>
+                                <ColoredDot color={project.color}></ColoredDot>
+                                <span className="projectName">
+                                    {project.name}
+                                </span>
+                            </ProjectLink>
+                        </ProjectContextMenu>
                     ))}
             </CollapseWrapper>
         </ExpansionPanelWrapper>

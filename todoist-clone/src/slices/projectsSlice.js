@@ -18,7 +18,17 @@ export const addProject = createAsyncThunk(
         }
     }
 );
-
+export const updateProject = createAsyncThunk(
+    "projects/updateProject",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const res = await api.updateProject(arg);
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 export const getProjects = createAsyncThunk(
     "projects/getProjects",
     async (arg, { rejectWithValue }) => {
@@ -43,6 +53,9 @@ const projectsSlice = createSlice({
         },
         [addProject.fulfilled]: (state, action) => {
             projectsAdapter.upsertOne(state, action.payload);
+        },
+        [updateProject.pending]: (state, { meta: { arg } }) => {
+            projectsAdapter.upsertOne(state, arg);
         },
         "tasks/addTask/fulfilled": (state, { payload }) => {
             let project = projectsAdapter

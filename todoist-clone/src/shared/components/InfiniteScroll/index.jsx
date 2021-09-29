@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+import React, { useRef, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { InfiniteScrollWrapper, InfiniteScrollContent } from "./Styles";
 

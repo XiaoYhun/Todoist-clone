@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ProjectWrapper } from "./Styles";
 import Header from "./Header";
 import ProjectContent from "./ProjectContent";
@@ -8,7 +8,6 @@ import { getOverdueTasks, getTodayTasks } from "slices/tasksSlice";
 import { projectsSelectors } from "slices/projectsSlice";
 import { Route, useRouteMatch, useHistory } from "react-router-dom";
 import TaskDetailModal from "components/TaskDetailModal";
-import AddProjectModal from "components/AddProjectModal";
 function Project(props) {
     const overdueTasks = useSelector(getOverdueTasks);
     const todayTasks = useSelector(getTodayTasks);
@@ -43,7 +42,6 @@ function Project(props) {
                     );
                 }}
             />
-            <AddProjectModal></AddProjectModal>
         </ProjectWrapper>
     );
 }
