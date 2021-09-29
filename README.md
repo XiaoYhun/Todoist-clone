@@ -12,8 +12,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Technologies used in this project
 
----
-
 - ReactJS + [Redux toolkits](https://redux-toolkit.js.org/)
 
 - Express Nodejs + MongoDB(mongoose)
@@ -24,8 +22,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Features
 
----
-
 - **Create/Edit/Save, Mark as Done** Task.
 
 - **Sub tasks** - Each Task can have multiple sup tasks.
@@ -34,8 +30,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - **Project features** - can assign Tasks to a specific Project.
 
 ## Features on Plan
-
----
 
 - **Time tracker** - to tracking time when you are doing on the Task. Stop it when you finished the Task, to see how many time used for the Task.
 - **Timeline chart** - showing Time used by each Task in a calendar chart. [Example](https://files.planyway.com/common/powerup-store-project-roadmap.png)
